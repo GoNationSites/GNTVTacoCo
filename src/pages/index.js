@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, Component } from "react"
 import Layout from "../components/layout"
 import axios from "axios-jsonp"
 import jsonAdapter from "axios-jsonp"
 import ShowcaseInfo from "../components/showcaseInfo"
+import "react-responsive-carousel/lib/styles/carousel.min.css"
+import { Carousel } from "react-responsive-carousel"
+import FullImageBG from "../components/fullImageBg"
 
 const IndexPage = () => {
   const [menuData, setMenuData] = useState({})
@@ -85,23 +88,23 @@ const IndexPage = () => {
 
   return (
     <Layout>
-      <h1>GONATION TV</h1>
-      <h2>{menuData.name}</h2>
-      <ul>
-        {formattedMenu.length
-          ? formattedMenu.map(item => <li>{item.name}</li>)
-          : ""}
-        {formattedMenu.length ? (
-          <ShowcaseInfo
-            title={formattedMenu[0].name}
-            description={formattedMenu[0].desc}
-            image={formattedMenu[0].image}
-            price={formattedMenu[0].price}
+      <Carousel showThumbs={false}>
+        {formattedMenu.map(item => (
+          //   <ShowcaseInfo
+          //     title={item.title}
+          //     description={item.desc}
+          //     price={item.price}
+          //     image={item.image}
+          //   />
+          // ))}
+          <FullImageBG
+            title={item.name}
+            description={item.desc}
+            price={item.price}
+            image={item.image}
           />
-        ) : (
-          ""
-        )}
-      </ul>
+        ))}
+      </Carousel>
     </Layout>
   )
 }
