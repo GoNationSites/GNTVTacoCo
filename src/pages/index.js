@@ -58,7 +58,7 @@ const IndexPage = () => {
           "gonation.data.prod/default/img-itm-cover-full.png"
         )
       } else {
-        console.log("no prefix")
+        renderItemsFromSection(item)
       }
     })
   }
