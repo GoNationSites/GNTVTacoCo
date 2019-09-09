@@ -49,22 +49,24 @@ const IndexPage = () => {
     requestRecurringEventData(gonationID)
   }, [])
 
-  const renderItemsFromSection = section => {}
+  const renderItemsFromSection = section => {
+    return section.inventory.filter(item => {
+      console.log(item)
+      if (item.item) {
+        return (
+          item.item.imagePrefix !==
+          "gonation.data.prod/default/img-itm-cover-full.png"
+        )
+      } else {
+        console.log("no prefix")
+      }
+    })
+  }
 
   const filterMenuData = () => {
     console.log("menu data!!", menuData)
     const filteredMenuData = menuData.inventory.map(section => {
-      return section.inventory.filter(item => {
-        console.log(item)
-        if (item.item) {
-          return (
-            item.item.imagePrefix !==
-            "gonation.data.prod/default/img-itm-cover-full.png"
-          )
-        } else {
-          console.log("no prefix")
-        }
-      })
+      return renderItemsFromSection(section)
     })
     console.log("filtered Menu is: ", filteredMenuData)
     return
