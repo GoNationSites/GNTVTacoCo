@@ -53,7 +53,6 @@ const IndexPage = () => {
 
   const buildSection = element => {
     element.inventory.forEach(item => {
-      console.log("item: ", item)
       if (!item.section) {
         if (item.item.photo_id !== null) {
           someData.push({
@@ -66,7 +65,6 @@ const IndexPage = () => {
           })
         }
       } else {
-        console.log("ELSE", item)
         buildSection(item)
       }
     })
@@ -75,15 +73,12 @@ const IndexPage = () => {
   const runMenu = () => {
     menuData.inventory.forEach(element => {
       buildSection(element)
-      console.log(someData)
     })
     setFormattedMenu(someData)
   }
 
   useEffect(() => {
-    console.log("here")
     if (menuData && menuData.section) {
-      console.log(menuData)
       runMenu()
     }
   }, [menuData])
