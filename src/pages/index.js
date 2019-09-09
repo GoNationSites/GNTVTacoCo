@@ -88,7 +88,15 @@ const IndexPage = () => {
 
   return (
     <Layout>
-      <Carousel showThumbs={false}>
+      <Carousel
+        showThumbs={false}
+        showArrows={false}
+        showStatus={false}
+        showIndicators={false}
+        autoPlay={true}
+        infiniteLoop={true}
+        interval={3000}
+      >
         {formattedMenu.map(item => (
           //   <ShowcaseInfo
           //     title={item.title}

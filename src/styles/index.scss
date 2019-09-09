@@ -1,4 +1,15 @@
 @import './variables.scss';
+body {
+    font-family: 'Ubuntu', serif;
+}
+
+h1 {
+    font-size: 4rem;
+}
+
+p {
+    font-size: 1.3rem;
+}
 
 .showcase-info-bg {
     color: #fff;
@@ -9,7 +20,7 @@
     .content-block {
         text-align: right;
         padding: 2rem;
-        max-width: 450px;
+        max-width: 500px;
         background: rgba(0, 0, 0, 0.45);
     }
 }
