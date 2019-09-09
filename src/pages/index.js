@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react"
 import Layout from "../components/layout"
 import axios from "axios-jsonp"
 import jsonAdapter from "axios-jsonp"
-import { request } from "https"
+import ShowcaseInfo from "../components/showcaseInfo"
 
 const IndexPage = () => {
   const [menuData, setMenuData] = useState({})
   const [eventData, setEventData] = useState({})
   const [recurringData, setRecurringEventData] = useState({})
   const gonationID = process.env.GONATIONID
-  const [isLoading, setIsLoading] = useState(false)
+  const [formattedMenu, setFormattedMenu] = useState([])
 
   // Make request for menu data
   // todo account for > 1 powered lists / dynamic
@@ -17,7 +17,7 @@ const IndexPage = () => {
     axios({
       url: `https://data.prod.gonation.com/pl/get?profile_id=${id}`,
       adapter: jsonAdapter,
-    }).then(async res => {
+    }).then(res => {
       setMenuData(res.data[0])
       console.log("menu datares: ", res.data[0])
     })
@@ -49,37 +49,64 @@ const IndexPage = () => {
     requestRecurringEventData(gonationID)
   }, [])
 
-  const renderItemsFromSection = section => {
-    return section.inventory.filter(item => {
-      console.log(item)
-      if (item.item) {
-        return (
-          item.item.imagePrefix !==
-          "gonation.data.prod/default/img-itm-cover-full.png"
-        )
+  const someData = []
+
+  const buildSection = element => {
+    element.inventory.forEach(item => {
+      console.log("item: ", item)
+      if (!item.section) {
+        if (item.item.photo_id !== null) {
+          someData.push({
+            name: item.item.name,
+            desc: item.item.desc,
+            sectionName: element.section.name,
+            image: item.item.imageUrl,
+            price:
+              item.item.variants.length > 0 ? item.item.variants[0].price : "",
+          })
+        }
       } else {
-        renderItemsFromSection(item)
+        console.log("ELSE", item)
+        buildSection(item)
       }
     })
   }
 
-  const filterMenuData = () => {
-    console.log("menu data!!", menuData)
-    const filteredMenuData = menuData.inventory.map(section => {
-      return renderItemsFromSection(section)
+  const runMenu = () => {
+    menuData.inventory.forEach(element => {
+      buildSection(element)
+      console.log(someData)
     })
-    console.log("filtered Menu is: ", filteredMenuData)
-    return
+    setFormattedMenu(someData)
   }
 
-  setTimeout(function() {
-    filterMenuData()
-  }, 3000)
+  useEffect(() => {
+    console.log("here")
+    if (menuData && menuData.section) {
+      console.log(menuData)
+      runMenu()
+    }
+  }, [menuData])
 
   return (
     <Layout>
       <h1>GONATION TV</h1>
       <h2>{menuData.name}</h2>
+      <ul>
+        {formattedMenu.length
+          ? formattedMenu.map(item => <li>{item.name}</li>)
+          : ""}
+        {formattedMenu.length ? (
+          <ShowcaseInfo
+            title={formattedMenu[0].name}
+            description={formattedMenu[0].desc}
+            image={formattedMenu[0].image}
+            price={formattedMenu[0].price}
+          />
+        ) : (
+          ""
+        )}
+      </ul>
     </Layout>
   )
 }
