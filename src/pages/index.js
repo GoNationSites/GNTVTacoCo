@@ -6,6 +6,7 @@ import ShowcaseInfo from "../components/showcaseInfo"
 import "react-responsive-carousel/lib/styles/carousel.min.css"
 import { Carousel } from "react-responsive-carousel"
 import FullImageBG from "../components/fullImageBg"
+import SideBySideView from "../components/SideBySideView"
 
 const IndexPage = () => {
   const [menuData, setMenuData] = useState({})
@@ -13,6 +14,8 @@ const IndexPage = () => {
   const [recurringData, setRecurringEventData] = useState({})
   const gonationID = process.env.GONATIONID
   const [formattedMenu, setFormattedMenu] = useState([])
+
+  const [randomNumber, setRandomNumber] = useState(1)
 
   // Make request for menu data
   // todo account for > 1 powered lists / dynamic
@@ -86,32 +89,51 @@ const IndexPage = () => {
     }
   }, [menuData])
 
+  const pickRandom = () => {
+    setRandomNumber(Math.floor(Math.random() * 2) + 1)
+  }
+
   return (
     <Layout>
       <Carousel
         showThumbs={false}
-        showArrows={false}
+        showArrows={true}
         showStatus={false}
-        showIndicators={false}
+        showIndicators={true}
+        transitionTime={1000}
         autoPlay={true}
-        infiniteLoop={true}
-        interval={3000}
+        interval={4000}
       >
-        {formattedMenu.map(item => (
-          //   <ShowcaseInfo
-          //     title={item.title}
-          //     description={item.desc}
-          //     price={item.price}
-          //     image={item.image}
-          //   />
-          // ))}
-          <FullImageBG
-            title={item.name}
-            description={item.desc}
-            price={item.price}
-            image={item.image}
-          />
-        ))}
+        {formattedMenu.length > 1 &&
+          formattedMenu.map(
+            item => (
+              //   <ShowcaseInfo
+              //     title={item.title}
+              //     description={item.desc}
+              //     price={item.price}
+              //     image={item.image}
+              //   />
+              // ))}
+
+              <FullImageBG
+                key={item.name}
+                title={item.name}
+                description={item.desc}
+                price={item.price}
+                image={item.image}
+                textPositioning="right"
+              />
+            )
+            // <SideBySideView
+            //   key={item.name}
+            //   title={item.name}
+            //   description={item.desc}
+            //   price={item.price}
+            //   image={item.image}
+            //   textPositioning="left"
+            //   isTypeCard
+            // ></SideBySideView>
+          )}
       </Carousel>
     </Layout>
   )

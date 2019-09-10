@@ -1,6 +1,7 @@
 import React from "react"
 import ContentBlock from "./contentBlock"
-const FullImageBG = ({
+import wood from "../images/wood.jpg"
+const SideBySideView = ({
   title,
   price,
   description,
@@ -9,17 +10,16 @@ const FullImageBG = ({
   isTypeCard,
 }) => {
   const background = {
-    backgroundImage: `url(${image})`,
+    background: `url(${wood})`,
     backgroundPosition: "center",
     backgroundSize: "cover",
-    height: "100vh",
   }
-
   return (
-    <div
-      className={`showcase-info-bg ${isTypeCard ? "card-type" : ""}`}
-      style={background}
-    >
+    <div className={`side-by-side-container`} style={background}>
+      <div className="img-wrapper">
+        <img src={image}></img>
+      </div>
+
       <ContentBlock
         title={title}
         price={price}
@@ -31,4 +31,4 @@ const FullImageBG = ({
   )
 }
 
-export default FullImageBG
+export default SideBySideView
