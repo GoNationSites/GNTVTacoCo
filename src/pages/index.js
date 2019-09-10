@@ -14,6 +14,7 @@ const IndexPage = () => {
   const [recurringData, setRecurringEventData] = useState({})
   const gonationID = process.env.GONATIONID
   const [formattedMenu, setFormattedMenu] = useState([])
+  const [formattedRecurringEvents, setFormattedRecurringEvents] = useState([])
 
   const [randomNumber, setRandomNumber] = useState(1)
 
@@ -44,8 +45,7 @@ const IndexPage = () => {
       url: `https://data.prod.gonation.com/profile/recurringevents?profile_id=${id}`,
       adapter: jsonAdapter,
     }).then(res => {
-      setRecurringEventData(res)
-      console.log("recurring res: ", res)
+      setRecurringEventData(res.data.events)
     })
   }
 
@@ -62,6 +62,7 @@ const IndexPage = () => {
       if (!item.section) {
         if (item.item.photo_id !== null) {
           someData.push({
+            type: "item",
             name: item.item.name,
             desc: item.item.desc,
             sectionName: element.section.name,
@@ -83,11 +84,30 @@ const IndexPage = () => {
     setFormattedMenu(someData)
   }
 
+  const eventArr = []
+  const formatRecurringData = () => {
+    console.log(recurringData)
+    recurringData.forEach(event => {
+      eventArr.push({
+        type: "event",
+        name: event.name,
+        desc: event.description,
+        image: event.imageUrl,
+        days: event.eventDays,
+        tags: event.eventTags,
+      })
+    })
+    setFormattedRecurringEvents(eventArr)
+  }
+
   useEffect(() => {
     if (menuData && menuData.section) {
       runMenu()
     }
-  }, [menuData])
+    if (recurringData.length) {
+      formatRecurringData()
+    }
+  }, [menuData, recurringData])
 
   const pickRandom = () => {
     setRandomNumber(Math.floor(Math.random() * 2) + 1)
