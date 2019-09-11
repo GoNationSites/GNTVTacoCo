@@ -14,7 +14,9 @@ const IndexPage = () => {
   const gonationID = process.env.GONATIONID
   const [formattedMenu, setFormattedMenu] = useState([])
   const [formattedRecurringEvents, setFormattedRecurringEvents] = useState([])
-  const [sectionData, setSectionData] = useState([])
+
+  const [sectionCandidates, setSectionCandidates] = useState([])
+  const [sectionData, setSectionData] = useState({})
 
   const [randomNumber, setRandomNumber] = useState(1)
 
@@ -97,6 +99,8 @@ const IndexPage = () => {
       // else if not, we create the new key(section) and push the item with it
       else {
         sortedSections[`${sluggedItem}`] = {
+          type: "section",
+          name: item.sectionName,
           items: [
             {
               name: item.name,
@@ -112,8 +116,11 @@ const IndexPage = () => {
     sectionNames.forEach((element, idx) => {
       if (sortedSections[element].items.length >= 3) {
         sectionNames.splice(idx, 1)
+      } else {
+        delete sortedSections[element]
       }
     })
+    setSectionCandidates(sectionCandidates)
     setSectionData(sortedSections)
   }
 
@@ -156,10 +163,6 @@ const IndexPage = () => {
     setRandomNumber(Math.floor(Math.random() * 2) + 1)
   }
 
-  // todo concatinate the menu item data and the event data. Then figure out how to concatinate the section data
-  // 1. Find where each state of data is living.
-  // 2. run the concatinate function between the 2
-  // 3. Keep in mind this is only happening if 'shuffle' is true, but for MVP we are just going to have shuffle as the only option
   const allData = formattedRecurringEvents.concat(formattedMenu)
   return (
     <Layout>
