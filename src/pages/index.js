@@ -26,6 +26,7 @@ const IndexPage = () => {
       url: `https://data.prod.gonation.com/pl/get?profile_id=${id}`,
       adapter: jsonAdapter,
     }).then(res => {
+      console.log(res.data[0])
       setMenuData(res.data[0])
     })
   }
@@ -55,6 +56,8 @@ const IndexPage = () => {
     requestRecurringEventData(gonationID)
   }, [])
 
+  const getPrices = () => {}
+
   const formattedMenuDataArr = []
   const buildSection = element => {
     element.inventory.forEach(item => {
@@ -66,8 +69,7 @@ const IndexPage = () => {
             desc: item.item.desc,
             sectionName: element.section.name,
             image: item.item.imageUrl,
-            price:
-              item.item.variants.length > 0 ? item.item.variants[0].price : "",
+            price: item.item.variants.length > 0 ? item.item.variants : "",
           })
         }
       } else {

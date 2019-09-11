@@ -14,7 +14,7 @@ import SectionShowcase from "./SectionShowcase"
 
 // <SectionShowcase data={data} />
 const Slide = ({ data, sectionData }) => {
-  console.log("Data recieved into slide component: ", data)
+  //   console.log("Data recieved into slide component: ", data)
   return (
     <React.Fragment>
       <FullImageBG
@@ -23,6 +23,7 @@ const Slide = ({ data, sectionData }) => {
         description={data.desc}
         price={data.price}
         image={data.image}
+        eventDays={data.days}
         textPositioning="right"
       />
     </React.Fragment>
