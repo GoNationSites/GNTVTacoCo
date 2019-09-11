@@ -1,6 +1,7 @@
 import React from "react"
 import ContentBlock from "./contentBlock"
 const FullImageBG = ({
+  type,
   title,
   price,
   description,
@@ -22,7 +23,7 @@ const FullImageBG = ({
     >
       <ContentBlock
         title={title}
-        price={price}
+        price={price ? price : "event Data"}
         description={description}
         textPositioning={textPositioning}
         isTypeCard
