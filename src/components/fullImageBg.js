@@ -23,10 +23,10 @@ const FullImageBG = ({
     >
       <ContentBlock
         title={title}
-        price={price ? price : "event Data"}
+        price={price ? price : ""}
         description={description}
         textPositioning={textPositioning}
-        isTypeCard
+        type={type}
       ></ContentBlock>
     </div>
   )
