@@ -1,0 +1,22 @@
+.countdown-overlay {
+    color: #fff;
+    display: flex;
+    align-items: flex-start;
+    padding: 2rem;
+}
+
+.countdown-wrapper {
+    width: 100%;
+
+    .evt-day {
+        font-weight: bold;
+        margin: 0 20px;
+    }
+    .evt-hour {
+        margin: 0 10px;
+    }
+    .is-today {
+        border-bottom: 3px solid #fff;
+        padding-bottom: 3px;
+    }
+}

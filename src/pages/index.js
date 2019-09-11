@@ -169,7 +169,7 @@ const IndexPage = () => {
         showStatus={false}
         showIndicators={true}
         transitionTime={1000}
-        autoPlay={true}
+        autoPlay={false}
         interval={4000}
       >
         {allData.length > 1 && allData.map(item => <Slide data={item} />)}
