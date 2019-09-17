@@ -92,8 +92,8 @@ const IndexPage = () => {
       // For the first time through, we automatically populate the array
       if (sortedSections.length === 0) {
         sortedSections.push({
-          name: item.sectionName,
           type: "section",
+          name: item.sectionName,
           items: [
             {
               name: item.name,
@@ -106,7 +106,6 @@ const IndexPage = () => {
       } else {
         sortedSections.forEach((section, secID) => {
           if (slugify(item.sectionName) === slugify(section.name)) {
-            console.log("inside if")
             sectionExists = true
             section.items.push({
               name: item.name,
@@ -120,8 +119,8 @@ const IndexPage = () => {
         })
         if (!sectionExists) {
           sortedSections.push({
-            name: item.sectionName,
             type: "section",
+            name: item.sectionName,
             items: [
               {
                 name: item.name,
@@ -177,7 +176,11 @@ const IndexPage = () => {
     setRandomNumber(Math.floor(Math.random() * 2) + 1)
   }
 
-  const allData = formattedRecurringEvents.concat(formattedMenu)
+  const allData = formattedRecurringEvents
+    .concat(formattedMenu)
+    .concat(sectionData)
+
+  console.log("all data is now: ", allData)
   return (
     <Layout>
       <Carousel
