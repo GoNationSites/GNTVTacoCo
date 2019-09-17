@@ -6,6 +6,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"
 import Slide from "../components/slide"
 import { Carousel } from "react-responsive-carousel"
 import slugify from "../helpers/slugify"
+import shuffleArray from "../helpers/shuffleArray"
 
 const IndexPage = () => {
   const [menuData, setMenuData] = useState({})
@@ -18,6 +19,9 @@ const IndexPage = () => {
   const [sectionData, setSectionData] = useState([])
 
   const [randomNumber, setRandomNumber] = useState(1)
+  const [slideData, setSlideData] = useState([])
+
+  const [isLoading, setIsLoading] = useState(true)
 
   // Make request for menu data
   // todo account for > 1 powered lists / dynamic
@@ -166,6 +170,7 @@ const IndexPage = () => {
   }
 
   // This effect formats the data the way we need it for the slide component
+
   useEffect(() => {
     if (menuData && menuData.section) {
       runMenu()
@@ -175,30 +180,41 @@ const IndexPage = () => {
     }
   }, [menuData, recurringData])
 
+  useEffect(() => {
+    if (menuData && menuData.section && recurringData.length) {
+      setIsLoading(false)
+    }
+    if (!isLoading) {
+      setSlideData(
+        shuffleArray(
+          formattedRecurringEvents.concat(formattedMenu).concat(sectionData)
+        )
+      )
+    }
+  }, [isLoading, menuData, recurringData])
+
   const pickRandom = () => {
     setRandomNumber(Math.floor(Math.random() * 2) + 1)
   }
 
-  // const allData = formattedRecurringEvents
-  //   .concat(formattedMenu)
-  //   .concat(sectionData)
+  // const allData = sectionData
 
-  const allData = sectionData
-
-  console.log("all data is now: ", allData)
+  console.log("all data is now: ", slideData)
 
   return (
     <Layout>
       <Carousel
         showThumbs={false}
-        showArrows={false}
-        showStatus={false}
+        showArrows={true}
+        showStatus={true}
         showIndicators={false}
         transitionTime={1000}
         autoPlay={true}
-        interval={2000}
+        interval={000}
       >
-        {allData.length > 1 && allData.map(item => <Slide data={item} />)}
+        {!isLoading &&
+          slideData.length > 1 &&
+          slideData.map(item => <Slide data={item} />)}
       </Carousel>
     </Layout>
   )
