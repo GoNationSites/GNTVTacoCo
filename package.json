@@ -6,6 +6,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "axios-jsonp": "^1.0.2",
+    "bulma": "^0.7.5",
     "dayjs": "^1.8.16",
     "gatsby": "^2.15.11",
     "gatsby-image": "^2.2.17",

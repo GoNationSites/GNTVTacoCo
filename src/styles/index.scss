@@ -1,5 +1,7 @@
 @import './variables.scss';
 @import './countdown.scss';
+@import '../../node_modules/bulma/bulma.sass';
+@import './sectionShowcase.scss';
 body {
     font-family: 'Ubuntu', serif;
 }

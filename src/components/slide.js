@@ -42,7 +42,10 @@ const Slide = ({ data, sectionData }) => {
     height: "100vh",
   }
 
-  const renderSectionShowcase = () => <SectionShowcase />
+  const renderSectionShowcase = () =>
+    data.items.length >= 4 ? (
+      <SectionShowcase sectionName={data.name} items={data.items} />
+    ) : null
 
   return (
     <React.Fragment>

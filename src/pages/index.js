@@ -131,7 +131,13 @@ const IndexPage = () => {
       }
     })
 
-    setSectionData(sortedSections)
+    console.log(sortedSections)
+    const limitedResults = sortedSections.filter(
+      section => section.items.length >= 4
+    )
+    console.log(limitedResults)
+
+    setSectionData(limitedResults)
   }
 
   // Helps format the menu
@@ -173,11 +179,14 @@ const IndexPage = () => {
     setRandomNumber(Math.floor(Math.random() * 2) + 1)
   }
 
-  const allData = formattedRecurringEvents
-    .concat(formattedMenu)
-    .concat(sectionData)
+  // const allData = formattedRecurringEvents
+  //   .concat(formattedMenu)
+  //   .concat(sectionData)
+
+  const allData = sectionData
 
   console.log("all data is now: ", allData)
+
   return (
     <Layout>
       <Carousel
