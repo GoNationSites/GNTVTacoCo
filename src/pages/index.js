@@ -27,7 +27,6 @@ const IndexPage = () => {
       url: `https://data.prod.gonation.com/pl/get?profile_id=${id}`,
       adapter: jsonAdapter,
     }).then(res => {
-      console.log(res.data[0])
       setMenuData(res.data[0])
     })
   }
@@ -85,10 +84,8 @@ const IndexPage = () => {
   const sortedSections = []
 
   const buildSortedSectionData = data => {
-    console.log("data: ", data)
     data.forEach((item, itmID) => {
       let sectionExists = true
-      console.log("item is: ", item)
       // For the first time through, we automatically populate the array
       if (sortedSections.length === 0) {
         sortedSections.push({
@@ -99,7 +96,7 @@ const IndexPage = () => {
               name: item.name,
               desc: item.desc,
               price: item.variants,
-              img: item.imageUrl,
+              image: item.image,
             },
           ],
         })
@@ -111,7 +108,7 @@ const IndexPage = () => {
               name: item.name,
               desc: item.desc,
               price: item.variants,
-              img: item.imageUrl,
+              image: item.image,
             })
           } else {
             sectionExists = false
@@ -126,7 +123,7 @@ const IndexPage = () => {
                 name: item.name,
                 desc: item.desc,
                 price: item.variants,
-                img: item.imageUrl,
+                image: item.image,
               },
             ],
           })
