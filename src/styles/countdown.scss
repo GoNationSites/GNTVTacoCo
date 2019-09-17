@@ -1,8 +1,10 @@
 .countdown-overlay {
     color: #fff;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     padding: 2rem;
+    justify-content: center;
+    height: 100%;
     // background-position: center!important;
     // background-size: cover!important;
 }
@@ -21,4 +23,53 @@
         border-bottom: 3px solid #fff;
         padding-bottom: 3px;
     }
+    h2 {
+        font-size: 2rem;
+    }
 }
+
+
+.event-title {
+    font-size: 3rem;
+}
+
+.happening-title {
+        font-size: 5rem;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+.event-countdown-wrap {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    .countdown-timer {
+        display: inline-flex;
+        justify-content: space-between;
+        margin: 3rem 0;
+    }
+    .countdown-timer > p {
+        margin: 0 2rem;
+        display: flex;
+        flex-direction: column;
+    }
+    .time-title {
+        order: 9;
+        font-size: 1rem;
+        text-transform: uppercase;
+    }
+    .time-value {
+        font-size: 5rem;
+    }
+}
+
+
+
+// .countdown-overlay {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+// }

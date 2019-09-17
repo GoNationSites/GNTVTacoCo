@@ -2,10 +2,11 @@ import React, { useState } from "react"
 import SideBySideView from "./SideBySideView"
 import FullImageBG from "./fullImageBg"
 import SectionShowcase from "./SectionShowcase"
-import EventCountdown from "./EventCountdown"
+import RecurringSlide from "./RecurringSlide.js"
 import optimizeImage from "../helpers/cloudinaryOptimization"
 import wood from "../images/wood.jpg"
 import convertTime from "../helpers/convertTime"
+import EventCountdown from "./eventCountdown"
 
 // <FullImageBG
 //         key={data.name}
@@ -19,9 +20,7 @@ import convertTime from "../helpers/convertTime"
 // <SectionShowcase data={data} />
 const Slide = ({ data, sectionData }) => {
   console.log("DATA IN SIDE: ", data, data.type === "section")
-  const [isCountdown, setIsCountdown] = useState(
-    data.type === "event" ? true : false
-  )
+  const [isEvent, setisEvent] = useState(data.type === "event" ? true : false)
   const [isSection, setIsSection] = useState(data.type === "section")
 
   const getBackgroundImage = () => {
@@ -34,9 +33,7 @@ const Slide = ({ data, sectionData }) => {
 
   const background = {
     backgroundImage: `${
-      isCountdown
-        ? "linear-gradient( rgba(0,0,0,0.5), rgba(0, 0, 0, 0.5) ),"
-        : ""
+      isEvent ? "linear-gradient( rgba(0,0,0,0.5), rgba(0, 0, 0, 0.5) )," : ""
     } url(${getBackgroundImage()})`,
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
@@ -51,13 +48,36 @@ const Slide = ({ data, sectionData }) => {
     ) : null
   }
 
+  const getEventSlides = () => {
+    if (data.eventType === "regular") {
+      return (
+        <EventCountdown
+          title={data.name}
+          description={data.desc}
+          image={optimizeImage(data.image, 200)}
+          starts={data.starts}
+          ends={data.ends}
+        />
+      )
+    } else {
+      return (
+        <RecurringSlide
+          title={data.name}
+          description={data.desc}
+          image={optimizeImage(data.image, 200)}
+          eventDays={data.days}
+        />
+      )
+    }
+  }
+
   return (
     <React.Fragment>
       {isSection ? (
         renderSectionShowcase()
       ) : (
         <div
-          className={`${isCountdown ? "countdown-overlay" : "slide-overlay "}`}
+          className={`${isEvent ? "countdown-overlay" : "slide-overlay "}`}
           style={background}
         >
           {data.type !== "event" ? (
@@ -71,12 +91,7 @@ const Slide = ({ data, sectionData }) => {
               textPositioning="right"
             />
           ) : (
-            <EventCountdown
-              title={data.name}
-              description={data.desc}
-              image={optimizeImage(data.image, 200)}
-              eventDays={data.days}
-            />
+            getEventSlides()
           )}
         </div>
       )}

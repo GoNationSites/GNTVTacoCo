@@ -23,6 +23,8 @@ const IndexPage = () => {
 
   const [isLoading, setIsLoading] = useState(true)
 
+  const [formattedEventData, setFormattedEventData] = useState([])
+
   // Make request for menu data
   // todo account for > 1 powered lists / dynamic
   // ! we are only calling one powered list as of right now!!
@@ -40,7 +42,8 @@ const IndexPage = () => {
       url: `https://data.prod.gonation.com/profile/events?profile_id=${id}`,
       adapter: jsonAdapter,
     }).then(res => {
-      setEventData(res)
+      console.log("res is: ", res)
+      setEventData(res.data.events)
     })
   }
 
@@ -64,6 +67,7 @@ const IndexPage = () => {
 
   const formattedMenuDataArr = []
   const buildSection = element => {
+    console.log("element:!! ", element)
     element.inventory.forEach(item => {
       if (!item.section) {
         if (item.item.photo_id !== null) {
@@ -134,13 +138,9 @@ const IndexPage = () => {
         }
       }
     })
-
-    console.log(sortedSections)
     const limitedResults = sortedSections.filter(
       section => section.items.length >= 4
     )
-    console.log(limitedResults)
-
     setSectionData(limitedResults)
   }
 
@@ -159,6 +159,7 @@ const IndexPage = () => {
     recurringData.forEach(event => {
       eventArr.push({
         type: "event",
+        eventType: "recurring",
         name: event.name,
         desc: event.description,
         image: event.imageurl,
@@ -169,25 +170,54 @@ const IndexPage = () => {
     setFormattedRecurringEvents(eventArr)
   }
 
+  const formatEventData = () => {
+    const formattedEvents = []
+    eventData.forEach(event => {
+      formattedEvents.push({
+        type: "event",
+        eventType: "regular",
+        name: event.name,
+        desc: event.description,
+        image: event.imageurl,
+        tags: event.eventTags,
+        starts: event.starts,
+        ends: event.ends,
+      })
+    })
+    setFormattedEventData(formattedEvents)
+  }
+
   // This effect formats the data the way we need it for the slide component
 
   useEffect(() => {
     if (menuData && menuData.section) {
-      runMenu()
+      // runMenu()
     }
     if (recurringData.length) {
       formatRecurringData()
     }
-  }, [menuData, recurringData])
+    if (eventData.length) {
+      console.log("event data")
+      formatEventData()
+    }
+  }, [menuData, recurringData, eventData])
 
   useEffect(() => {
-    if (menuData && menuData.section && recurringData.length) {
+    if (
+      menuData &&
+      menuData.section &&
+      recurringData.length &&
+      eventData.length
+    ) {
       setIsLoading(false)
     }
     if (!isLoading) {
       setSlideData(
         shuffleArray(
-          formattedRecurringEvents.concat(formattedMenu).concat(sectionData)
+          formattedRecurringEvents
+            .concat(formattedMenu)
+            .concat(sectionData)
+            .concat(formattedEventData)
         )
       )
     }
@@ -205,12 +235,13 @@ const IndexPage = () => {
     <Layout>
       <Carousel
         showThumbs={false}
+        useKeyboardArrows={true}
         showArrows={true}
         showStatus={true}
         showIndicators={false}
         transitionTime={1000}
         autoPlay={true}
-        interval={000}
+        interval={2000}
       >
         {!isLoading &&
           slideData.length > 1 &&
