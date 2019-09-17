@@ -5,6 +5,7 @@ import SectionShowcase from "./SectionShowcase"
 import EventCountdown from "./EventCountdown"
 import optimizeImage from "../helpers/cloudinaryOptimization"
 import wood from "../images/wood.jpg"
+import convertTime from "../helpers/convertTime"
 
 // <FullImageBG
 //         key={data.name}
@@ -32,20 +33,23 @@ const Slide = ({ data, sectionData }) => {
   }
 
   const background = {
-    background: `${
+    backgroundImage: `${
       isCountdown
-        ? "linear-gradient( rgba(0,0,0,0.5), rgba(0, 0, 0, 0.5) ), "
+        ? "linear-gradient( rgba(0,0,0,0.5), rgba(0, 0, 0, 0.5) ),"
         : ""
     } url(${getBackgroundImage()})`,
-    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
+    backgroundPosition: "center",
     height: "100vh",
   }
 
-  const renderSectionShowcase = () =>
-    data.items.length >= 4 ? (
+  const renderSectionShowcase = () => {
+    console.log("function:", data.items)
+    return data.items.length >= 4 ? (
       <SectionShowcase sectionName={data.name} items={data.items} />
     ) : null
+  }
 
   return (
     <React.Fragment>
