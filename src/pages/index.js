@@ -15,8 +15,7 @@ const IndexPage = () => {
   const [formattedMenu, setFormattedMenu] = useState([])
   const [formattedRecurringEvents, setFormattedRecurringEvents] = useState([])
 
-  const [sectionCandidates, setSectionCandidates] = useState([])
-  const [sectionData, setSectionData] = useState({})
+  const [sectionData, setSectionData] = useState([])
 
   const [randomNumber, setRandomNumber] = useState(1)
 
@@ -83,44 +82,59 @@ const IndexPage = () => {
   // This code creates an object of section objects. Used for the section showcase component
   // !This can and will most likely be moved to a different component
   // todo this is a very long function, break it up.
-  const sortedSections = {}
+  const sortedSections = []
+
   const buildSortedSectionData = data => {
-    data.forEach(item => {
-      const sluggedItem = slugify(item.sectionName)
-      // if the key already exist, we just push the item inside the section
-      if (sluggedItem in sortedSections) {
-        sortedSections[`${sluggedItem}`].items.push({
-          name: item.name,
-          desc: item.desc,
-          price: item.price,
-          image: item.image,
-        })
-      }
-      // else if not, we create the new key(section) and push the item with it
-      else {
-        sortedSections[`${sluggedItem}`] = {
-          type: "section",
+    console.log("data: ", data)
+    data.forEach((item, itmID) => {
+      let sectionExists = true
+      console.log("item is: ", item)
+      // For the first time through, we automatically populate the array
+      if (sortedSections.length === 0) {
+        sortedSections.push({
           name: item.sectionName,
+          type: "section",
           items: [
             {
               name: item.name,
               desc: item.desc,
-              price: item.price,
-              image: item.image,
+              price: item.variants,
+              img: item.imageUrl,
             },
           ],
+        })
+      } else {
+        sortedSections.forEach((section, secID) => {
+          if (slugify(item.sectionName) === slugify(section.name)) {
+            console.log("inside if")
+            sectionExists = true
+            section.items.push({
+              name: item.name,
+              desc: item.desc,
+              price: item.variants,
+              img: item.imageUrl,
+            })
+          } else {
+            sectionExists = false
+          }
+        })
+        if (!sectionExists) {
+          sortedSections.push({
+            name: item.sectionName,
+            type: "section",
+            items: [
+              {
+                name: item.name,
+                desc: item.desc,
+                price: item.variants,
+                img: item.imageUrl,
+              },
+            ],
+          })
         }
       }
     })
-    const sectionNames = Object.keys(sortedSections)
-    sectionNames.forEach((element, idx) => {
-      if (sortedSections[element].items.length >= 3) {
-        sectionNames.splice(idx, 1)
-      } else {
-        delete sortedSections[element]
-      }
-    })
-    setSectionCandidates(sectionCandidates)
+
     setSectionData(sortedSections)
   }
 
@@ -168,12 +182,12 @@ const IndexPage = () => {
     <Layout>
       <Carousel
         showThumbs={false}
-        showArrows={true}
+        showArrows={false}
         showStatus={false}
-        showIndicators={true}
+        showIndicators={false}
         transitionTime={1000}
-        autoPlay={false}
-        interval={4000}
+        autoPlay={true}
+        interval={2000}
       >
         {allData.length > 1 && allData.map(item => <Slide data={item} />)}
       </Carousel>
