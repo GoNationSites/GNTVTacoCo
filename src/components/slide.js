@@ -8,18 +8,7 @@ import wood from "../images/wood.jpg"
 import convertTime from "../helpers/convertTime"
 import EventCountdown from "./eventCountdown"
 
-// <FullImageBG
-//         key={data.name}
-//         title={data.name}
-//         description={data.desc}
-//         price={data.price}
-//         image={data.image}
-//         textPositioning="right"
-//       />
-
-// <SectionShowcase data={data} />
 const Slide = ({ data, sectionData }) => {
-  console.log("DATA IN SIDE: ", data, data.type === "section")
   const [isEvent, setisEvent] = useState(data.type === "event" ? true : false)
   const [isSection, setIsSection] = useState(data.type === "section")
 

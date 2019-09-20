@@ -13,19 +13,23 @@ const EventCountdown = ({ title, description, image, starts, ends }) => {
       return (
         <p className="countdown-timer">
           <p>
-            <span className="time-title">days</span>{" "}
+            <span className="time-title">{days === 1 ? "day" : "days"}</span>{" "}
             <span className="time-value">{days}</span>
           </p>
           <p>
-            <span className="time-title">hours</span>{" "}
+            <span className="time-title">{hours === 1 ? "hour" : "hours"}</span>{" "}
             <span className="time-value">{hours}</span>
           </p>
           <p>
-            <span className="time-title">minutes</span>{" "}
+            <span className="time-title">
+              {minutes === 1 ? "minute" : "minutes"}
+            </span>{" "}
             <span className="time-value">{minutes}</span>
           </p>
           <p>
-            <span className="time-title">seconds</span>{" "}
+            <span className="time-title">
+              {seconds === 1 ? "second" : "seconds"}
+            </span>{" "}
             <span className="time-value">{seconds}</span>
           </p>
         </p>

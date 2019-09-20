@@ -7,6 +7,7 @@ import Slide from "../components/slide"
 import { Carousel } from "react-responsive-carousel"
 import slugify from "../helpers/slugify"
 import shuffleArray from "../helpers/shuffleArray"
+import PoweredToolsSlide from "../components/poweredToolsSlide"
 
 const IndexPage = () => {
   const [menuData, setMenuData] = useState({})
@@ -24,6 +25,18 @@ const IndexPage = () => {
   const [isLoading, setIsLoading] = useState(true)
 
   const [formattedEventData, setFormattedEventData] = useState([])
+
+  // form state
+
+  const [slideDuration, setSlideDuration] = useState(15000)
+  const [activeTypes, setActiveTypes] = useState([
+    "item",
+    "event",
+    "section",
+    "shout",
+  ])
+
+  // end form state
 
   // Make request for menu data
   // todo account for > 1 powered lists / dynamic
@@ -63,6 +76,7 @@ const IndexPage = () => {
     requestRecurringEventData(gonationID)
   }, [])
 
+  // todo render ALL prices
   const getPrices = () => {}
 
   const formattedMenuDataArr = []
@@ -149,8 +163,10 @@ const IndexPage = () => {
     menuData.inventory.forEach(element => {
       buildSection(element)
     })
-    buildSortedSectionData(formattedMenuDataArr)
-    setFormattedMenu(formattedMenuDataArr)
+    if (activeTypes.includes("section")) {
+      buildSortedSectionData(formattedMenuDataArr)
+      setFormattedMenu(formattedMenuDataArr)
+    }
   }
 
   // Formats the recurring event data
@@ -190,25 +206,20 @@ const IndexPage = () => {
   // This effect formats the data the way we need it for the slide component
 
   useEffect(() => {
-    if (menuData && menuData.section) {
-      // runMenu()
+    if (activeTypes.includes("item") && menuData && menuData.section) {
+      runMenu()
     }
-    if (recurringData.length) {
+    if (activeTypes.includes("event") && recurringData.length) {
       formatRecurringData()
     }
-    if (eventData.length) {
+    if (activeTypes.includes("event") && eventData.length) {
       console.log("event data")
       formatEventData()
     }
   }, [menuData, recurringData, eventData])
 
   useEffect(() => {
-    if (
-      menuData &&
-      menuData.section &&
-      recurringData.length &&
-      eventData.length
-    ) {
+    if (menuData && menuData.section && recurringData.length && eventData) {
       setIsLoading(false)
     }
     if (!isLoading) {
@@ -233,6 +244,12 @@ const IndexPage = () => {
 
   return (
     <Layout>
+      <PoweredToolsSlide
+        duration={slideDuration}
+        setSlideDuration={setSlideDuration}
+        activeTypes={activeTypes}
+        setActiveTypes={setActiveTypes}
+      />
       <Carousel
         showThumbs={false}
         useKeyboardArrows={true}
@@ -241,7 +258,7 @@ const IndexPage = () => {
         showIndicators={false}
         transitionTime={1000}
         autoPlay={true}
-        interval={2000}
+        interval={slideDuration}
       >
         {!isLoading &&
           slideData.length > 1 &&
