@@ -100,7 +100,7 @@ const Slide = ({ data, showcaseType, slideStyleType }) => {
             price={data.price ? data.price : ""}
             image={optimizeImage(data.image, 200)}
             eventDays={data.days ? data.days : ""}
-            textPositioning="right"
+            textPositioningId={Math.floor(Math.random() * Math.floor(2))}
           />
         )
       case "sideBySideView":

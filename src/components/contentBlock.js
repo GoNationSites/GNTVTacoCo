@@ -4,17 +4,11 @@ const ContentBlock = ({
   title,
   price,
   description,
-  textPositioning,
+  textPositioningId,
   isTypeCard,
   type,
 }) => {
-  const getTextPositioning = () => {
-    return textPositioning === "right"
-      ? "positioning-right"
-      : "positioning-left"
-  }
-
-  const renderPrices = () => price.map(price => <span>{price.price}</span>)
+  const renderPrices = () => price.map(price => <span>$ {price.price}</span>)
 
   const handleNoPrices = () => {
     console.log("inside handle no prices case, price is: ", price)
@@ -22,9 +16,7 @@ const ContentBlock = ({
 
   return (
     <div
-      className={`content-block ${getTextPositioning()} ${
-        isTypeCard ? "content-block__card" : ""
-      } `}
+      className={`content-block  ${isTypeCard ? "content-block__card" : ""} `}
     >
       <h1>{title}</h1>
       <p>{description}</p>

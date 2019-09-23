@@ -31,16 +31,10 @@ p {
     }
 }
 
-.slide-overlay.card-type {
-    justify-content: flex-end;
-    align-items: flex-end;
-    padding: 0;
-}
-
   .content-block {
-        text-align: right;
+        text-align: left;
         padding: 2rem;
-        max-width: 500px;
+        max-width: 655px;
         background: rgba(0, 0, 0, 0.45);
     }
     .content-block__card {
@@ -48,7 +42,7 @@ p {
     color: $primary;
     border-radius: 3px;
     margin: 10px;
-    max-width: 400px;
+    max-width: 500px;
 
     h1 {
         font-size: 3rem;
@@ -78,4 +72,19 @@ p {
         margin-left: -100px;
     }
 }
+
+.full-background-slide {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 2rem;
+
+    &.positioning-left {
+        justify-content: flex-start;
+    }
+    &.positioning-right {
+        justify-content: flex-end;
+    }
+}
+
 

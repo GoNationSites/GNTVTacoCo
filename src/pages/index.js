@@ -289,7 +289,7 @@ const IndexPage = () => {
           slideData.length > 1 &&
           slideData.map(item => (
             <Slide
-              slideStyleType={"random"}
+              slideStyleType={"fullImageBG"}
               showcaseType={"default"}
               data={item}
             />
