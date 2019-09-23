@@ -12,29 +12,55 @@ import EventCountdown from "./eventCountdown"
 // showcaseType: default or list
 // slideStyleType: random, fullBG, Sidebyside -- Random by default
 
-const Slide = ({ data, sectionData, showcaseType, slideStyleType }) => {
+const Slide = ({ data, showcaseType, slideStyleType }) => {
+  const [displayedSlide, setDisplayedSlide] = useState()
   const getDataType = () => data.type
   const handleListType = () => {
     console.log("handling list type")
   }
 
-  const handleEventData = () => {}
+  // generate random styles. Either full background or side by side view.
+  const randomlyPickSlideStyle = () => {
+    const getRandomNumber = () => Math.floor(Math.random() * Math.floor(2))
+    if (getRandomNumber === 0) {
+      setDisplayedSlide("sideBySideView")
+    } else if (getRandomNumber === 1) {
+      setDisplayedSlide("fullImageBG")
+    } else {
+      setDisplayedSlide("fullImageBG")
+    }
+  }
+
+  const handleSimpleData = () => {
+    // event data can be showcased with a full background or side by side view. Events can either be of type recurring or regular. They are both similar except regular get a countdown and recurring does not.
+    switch (slideStyleType) {
+      case "random":
+        randomlyPickSlideStyle()
+        break
+      case "fullImageBG":
+        setDisplayedSlide("fullImageBG")
+        break
+      case "sideBySideView":
+        setDisplayedSlide("sideBySideView")
+        break
+    }
+  }
 
   // handle slides based on data type
   const handleDefaultType = () => {
     const type = getDataType()
     switch (type) {
       case "event":
-        handleEventData()
+        handleSimpleData("event")
         break
       case "item":
-        handleItemData()
+        handleSimpleData("item")
         break
       case "shout":
-        handleShoutData()
+        handleSimpleData("shout")
         break
       case "section":
-        handleSectionData()
+        setDisplayedSlide("sectionShowcase")
         break
       default:
         console.log("error: invalid data type")
