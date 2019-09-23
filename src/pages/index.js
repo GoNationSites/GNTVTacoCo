@@ -75,7 +75,7 @@ const IndexPage = () => {
       url: `https://data.prod.gonation.com/profile/shoutsnew/${id}`,
       adapter: jsonAdapter,
     }).then(res => {
-      setShoutData(res.data.shout)
+      setShoutData(res.data)
     })
   }
 
@@ -214,6 +214,20 @@ const IndexPage = () => {
     setFormattedEventData(formattedEvents)
   }
 
+  const formatShoutData = () => {
+    const formattedShout = []
+    console.log("!", shoutData)
+    formattedShout.push({
+      type: "shout",
+      text: shoutData.shout.text,
+      name: "Recent Shout",
+      shoutedAt: shoutData.shout.updatedAt,
+      image: `${shoutData.imageBaseUrl}${shoutData.shout.cloudinaryId}`,
+    })
+    console.log(formattedShout)
+    setShoutData(formattedShout)
+  }
+
   // This effect formats the data the way we need it for the slide component
 
   useEffect(() => {
@@ -227,7 +241,10 @@ const IndexPage = () => {
       console.log("event data")
       formatEventData()
     }
-  }, [menuData, recurringData, eventData])
+    if (activeTypes.includes("shout") && shoutData.hasOwnProperty("shout")) {
+      formatShoutData()
+    }
+  }, [menuData, recurringData, eventData, shoutData])
 
   useEffect(() => {
     if (menuData && menuData.section && recurringData.length && eventData) {
@@ -240,6 +257,7 @@ const IndexPage = () => {
             .concat(formattedMenu)
             .concat(sectionData)
             .concat(formattedEventData)
+            .concat(shoutData)
         )
       )
     }
