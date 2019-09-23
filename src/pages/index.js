@@ -290,7 +290,7 @@ const IndexPage = () => {
           slideData.map(item => (
             <Slide
               slideStyleType={"random"}
-              showcaseType={"list"}
+              showcaseType={"default"}
               data={item}
             />
           ))}

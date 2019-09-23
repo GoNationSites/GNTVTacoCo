@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import SideBySideView from "./SideBySideView"
 import FullImageBG from "./fullImageBg"
 import SectionShowcase from "./SectionShowcase"
@@ -14,6 +14,9 @@ import EventCountdown from "./eventCountdown"
 
 const Slide = ({ data, showcaseType, slideStyleType }) => {
   const [displayedSlide, setDisplayedSlide] = useState()
+  const [randomNumber, setRandomNumber] = useState(
+    Math.floor(Math.random() * Math.floor(2))
+  )
   const getDataType = () => data.type
   const handleListType = () => {
     console.log("handling list type")
@@ -21,10 +24,12 @@ const Slide = ({ data, showcaseType, slideStyleType }) => {
 
   // generate random styles. Either full background or side by side view.
   const randomlyPickSlideStyle = () => {
-    const getRandomNumber = () => Math.floor(Math.random() * Math.floor(2))
-    if (getRandomNumber === 0) {
+    console.log("getRandomNumber: ", randomNumber)
+    if (randomNumber == 0) {
+      console.log("set side by side")
       setDisplayedSlide("sideBySideView")
-    } else if (getRandomNumber === 1) {
+    } else if (randomNumber == 1) {
+      console.log("set full")
       setDisplayedSlide("fullImageBG")
     } else {
       setDisplayedSlide("fullImageBG")
@@ -79,9 +84,48 @@ const Slide = ({ data, showcaseType, slideStyleType }) => {
     }
   }
 
+  useEffect(() => {
+    handleStyleType()
+  }, [])
+
+  const getSlideStyle = () => {
+    console.log("displayed slide: ", displayedSlide)
+    switch (displayedSlide) {
+      case "fullImageBG":
+        return (
+          <FullImageBG
+            type={data.type}
+            title={data.name}
+            description={data.desc}
+            price={data.price ? data.price : ""}
+            image={optimizeImage(data.image, 200)}
+            eventDays={data.days ? data.days : ""}
+            textPositioning="right"
+          />
+        )
+      case "sideBySideView":
+        return (
+          <SideBySideView
+            type={data.type}
+            title={data.name}
+            description={data.desc}
+            price={data.price ? data.price : ""}
+            image={optimizeImage(data.image, 200)}
+            eventDays={data.days ? data.days : ""}
+            textPositioning="right"
+            isTypeCard={false}
+          />
+        )
+      case "sectionShowcase":
+        return (
+          <SectionShowcase items={data.items} sectionName={data.sectionName} />
+        )
+    }
+  }
+
   return (
     <React.Fragment>
-      <div className="slide-overlay"></div>
+      <div className="slide-overlay">{getSlideStyle()}</div>
     </React.Fragment>
   )
 }
