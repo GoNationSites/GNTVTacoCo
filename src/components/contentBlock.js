@@ -15,6 +15,7 @@ const ContentBlock = ({
   starts,
   ends,
   eventDays,
+  shoutedAt,
 }) => {
   const [blockType, setBlockType] = useState("default")
   const renderPrices = () => price.map(price => <span>$ {price.price}</span>)
@@ -68,7 +69,8 @@ const ContentBlock = ({
         return handleEventType()
         break
       case "shout":
-        return <ShoutBlock />
+        console.log("%%%%%%%%%", description)
+        return <ShoutBlock description={description} shoutedAt={shoutedAt} />
         break
       default:
         return defaultContentBlock()

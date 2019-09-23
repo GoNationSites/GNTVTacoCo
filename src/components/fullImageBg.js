@@ -13,6 +13,7 @@ const FullImageBG = ({
   ends,
   eventType,
   eventDays,
+  shoutedAt,
 }) => {
   const fullImageBackground = {
     background: `url(${optimizeImage(image, 100)}) center center / cover`,
@@ -42,6 +43,7 @@ const FullImageBG = ({
         ends={ends}
         eventType={eventType}
         eventDays={eventDays}
+        shoutedAt={shoutedAt}
       ></ContentBlock>
     </div>
   )

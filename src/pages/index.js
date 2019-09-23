@@ -32,9 +32,9 @@ const IndexPage = () => {
 
   const [slideDuration, setSlideDuration] = useState(15000)
   const [activeTypes, setActiveTypes] = useState([
-    "item",
-    "event",
-    "section",
+    // "item",
+    // "event",
+    // "section",
     "shout",
   ])
 
@@ -100,7 +100,7 @@ const IndexPage = () => {
           formattedMenuDataArr.push({
             type: "item",
             name: item.item.name,
-            desc: item.item.desc,
+            description: item.item.desc,
             sectionName: element.section.name,
             image: item.item.imageUrl,
             price: item.item.variants.length > 0 ? item.item.variants : "",
@@ -128,7 +128,7 @@ const IndexPage = () => {
           items: [
             {
               name: item.name,
-              desc: item.desc,
+              description: item.desc,
               price: item.variants,
               image: item.image,
             },
@@ -140,7 +140,7 @@ const IndexPage = () => {
             sectionExists = true
             section.items.push({
               name: item.name,
-              desc: item.desc,
+              description: item.desc,
               price: item.variants,
               image: item.image,
             })
@@ -155,7 +155,7 @@ const IndexPage = () => {
             items: [
               {
                 name: item.name,
-                desc: item.desc,
+                description: item.desc,
                 price: item.variants,
                 image: item.image,
               },
@@ -189,7 +189,7 @@ const IndexPage = () => {
         type: "event",
         eventType: "recurring",
         name: event.name,
-        desc: event.description,
+        description: event.description,
         image: event.imageurl,
         days: event.eventDays,
         tags: event.eventTags,
@@ -205,7 +205,7 @@ const IndexPage = () => {
         type: "event",
         eventType: "regular",
         name: event.name,
-        desc: event.description,
+        description: event.description,
         image: event.imageurl,
         tags: event.eventTags,
         starts: event.starts,
@@ -220,10 +220,10 @@ const IndexPage = () => {
     console.log("!", shoutData)
     formattedShout.push({
       type: "shout",
-      text: shoutData.shout.text,
+      description: shoutData.shout.text,
       name: "Recent Shout",
       shoutedAt: shoutData.shout.updatedAt,
-      image: `${shoutData.imageBaseUrl}${shoutData.shout.cloudinaryId}`,
+      image: `${shoutData.imageBaseUrl}/${shoutData.shout.image.image.cloudinaryId}`,
     })
     console.log(formattedShout)
     setFormattedShoutData(formattedShout)
@@ -258,6 +258,7 @@ const IndexPage = () => {
       setIsLoading(false)
     }
     if (!isLoading) {
+      console.log("im here, : ", formattedRecurringEvents, formattedMenu)
       setSlideData(
         shuffleArray(
           formattedRecurringEvents
@@ -293,7 +294,7 @@ const IndexPage = () => {
         interval={slideDuration}
       >
         {!isLoading &&
-          slideData.length > 1 &&
+          slideData.length > 0 &&
           slideData.map(item => (
             <Slide
               slideStyleType={"fullImageBG"}

@@ -96,7 +96,7 @@ const Slide = ({ data, showcaseType, slideStyleType }) => {
           <FullImageBG
             type={data.type}
             title={data.name}
-            description={data.desc}
+            description={data.description}
             price={data.price ? data.price : ""}
             image={optimizeImage(data.image, 200)}
             eventDays={data.days ? data.days : ""}
@@ -104,6 +104,7 @@ const Slide = ({ data, showcaseType, slideStyleType }) => {
             ends={data.ends}
             eventType={data.eventType}
             textPositioningId={Math.floor(Math.random() * Math.floor(2))}
+            shoutedAt={data.shoutedAt}
           />
         )
       case "sideBySideView":
