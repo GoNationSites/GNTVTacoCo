@@ -287,7 +287,13 @@ const IndexPage = () => {
       >
         {!isLoading &&
           slideData.length > 1 &&
-          slideData.map(item => <Slide data={item} />)}
+          slideData.map(item => (
+            <Slide
+              slideStyleType={"random"}
+              showcaseType={"list"}
+              data={item}
+            />
+          ))}
       </Carousel>
     </Layout>
   )

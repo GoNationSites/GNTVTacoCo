@@ -8,82 +8,54 @@ import wood from "../images/wood.jpg"
 import convertTime from "../helpers/convertTime"
 import EventCountdown from "./eventCountdown"
 
-const Slide = ({ data, sectionData }) => {
-  const [isEvent, setisEvent] = useState(data.type === "event" ? true : false)
-  const [isSection, setIsSection] = useState(data.type === "section")
+// data: data object
+// showcaseType: default or list
+// slideStyleType: random, fullBG, Sidebyside -- Random by default
 
-  const getBackgroundImage = () => {
-    if (data.type === "section") {
-      return wood
-    } else {
-      return optimizeImage(data.image, 100)
+const Slide = ({ data, sectionData, showcaseType, slideStyleType }) => {
+  const getDataType = () => data.type
+  const handleListType = () => {
+    console.log("handling list type")
+  }
+
+  const handleEventData = () => {}
+
+  // handle slides based on data type
+  const handleDefaultType = () => {
+    const type = getDataType()
+    switch (type) {
+      case "event":
+        handleEventData()
+        break
+      case "item":
+        handleItemData()
+        break
+      case "shout":
+        handleShoutData()
+        break
+      case "section":
+        handleSectionData()
+        break
+      default:
+        console.log("error: invalid data type")
+        break
     }
   }
 
-  const background = {
-    backgroundImage: `${
-      isEvent ? "linear-gradient( rgba(0,0,0,0.5), rgba(0, 0, 0, 0.5) )," : ""
-    } url(${getBackgroundImage()})`,
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    height: "100vh",
-  }
-
-  const renderSectionShowcase = () => {
-    console.log("function:", data.items)
-    return data.items.length >= 4 ? (
-      <SectionShowcase sectionName={data.name} items={data.items} />
-    ) : null
-  }
-
-  const getEventSlides = () => {
-    if (data.eventType === "regular") {
-      return (
-        <EventCountdown
-          title={data.name}
-          description={data.desc}
-          image={optimizeImage(data.image, 200)}
-          starts={data.starts}
-          ends={data.ends}
-        />
-      )
-    } else {
-      return (
-        <RecurringSlide
-          title={data.name}
-          description={data.desc}
-          image={optimizeImage(data.image, 200)}
-          eventDays={data.days}
-        />
-      )
+  // check if showcaseType is list, section, or default
+  const handleStyleType = () => {
+    switch (showcaseType) {
+      case "list":
+        handleListType()
+        break
+      default:
+        handleDefaultType()
     }
   }
 
   return (
     <React.Fragment>
-      {isSection ? (
-        renderSectionShowcase()
-      ) : (
-        <div
-          className={`${isEvent ? "countdown-overlay" : "slide-overlay "}`}
-          style={background}
-        >
-          {data.type !== "event" ? (
-            <FullImageBG
-              type={data.type}
-              title={data.name}
-              description={data.desc}
-              price={data.price}
-              image={optimizeImage(data.image, 200)}
-              eventDays={data.days}
-              textPositioning="right"
-            />
-          ) : (
-            getEventSlides()
-          )}
-        </div>
-      )}
+      <div className="slide-overlay"></div>
     </React.Fragment>
   )
 }
