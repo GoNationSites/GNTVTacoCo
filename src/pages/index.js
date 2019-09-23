@@ -261,7 +261,7 @@ const IndexPage = () => {
         )
       )
     }
-  }, [isLoading, menuData, recurringData])
+  }, [isLoading, menuData, recurringData, shoutData])
 
   // const allData = sectionData
 
