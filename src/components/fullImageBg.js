@@ -9,6 +9,10 @@ const FullImageBG = ({
   image,
   textPositioningId,
   isTypeCard,
+  starts,
+  ends,
+  eventType,
+  eventDays,
 }) => {
   const fullImageBackground = {
     background: `url(${optimizeImage(image, 100)}) center center / cover`,
@@ -33,6 +37,11 @@ const FullImageBG = ({
         description={description}
         textPositioningId={Math.floor(Math.random() * Math.floor(2))}
         type={type}
+        image={image}
+        starts={starts}
+        ends={ends}
+        eventType={eventType}
+        eventDays={eventDays}
       ></ContentBlock>
     </div>
   )
