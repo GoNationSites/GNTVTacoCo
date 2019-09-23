@@ -19,6 +19,7 @@ const IndexPage = () => {
 
   const [sectionData, setSectionData] = useState([])
   const [shoutData, setShoutData] = useState({})
+  const [formattedShoutData, setFormattedShoutData] = useState([])
 
   const [randomNumber, setRandomNumber] = useState(1)
   const [slideData, setSlideData] = useState([])
@@ -31,10 +32,10 @@ const IndexPage = () => {
 
   const [slideDuration, setSlideDuration] = useState(15000)
   const [activeTypes, setActiveTypes] = useState([
-    "item",
+    // "item",
     "event",
-    "section",
-    "shout",
+    // "section",
+    // "shout",
   ])
 
   // end form state
@@ -225,7 +226,7 @@ const IndexPage = () => {
       image: `${shoutData.imageBaseUrl}${shoutData.shout.cloudinaryId}`,
     })
     console.log(formattedShout)
-    setShoutData(formattedShout)
+    setFormattedShoutData(formattedShout)
   }
 
   // This effect formats the data the way we need it for the slide component
@@ -241,13 +242,19 @@ const IndexPage = () => {
       console.log("event data")
       formatEventData()
     }
-    if (activeTypes.includes("shout") && shoutData.hasOwnProperty("shout")) {
+    if (shoutData.hasOwnProperty("shout") && activeTypes.includes("shout")) {
       formatShoutData()
     }
   }, [menuData, recurringData, eventData, shoutData])
 
   useEffect(() => {
-    if (menuData && menuData.section && recurringData.length && eventData) {
+    if (
+      menuData &&
+      menuData.section &&
+      recurringData.length &&
+      eventData &&
+      shoutData
+    ) {
       setIsLoading(false)
     }
     if (!isLoading) {
@@ -257,7 +264,7 @@ const IndexPage = () => {
             .concat(formattedMenu)
             .concat(sectionData)
             .concat(formattedEventData)
-            .concat(shoutData)
+            .concat(formattedShoutData)
         )
       )
     }
