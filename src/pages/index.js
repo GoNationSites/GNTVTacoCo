@@ -18,6 +18,7 @@ const IndexPage = () => {
   const [formattedRecurringEvents, setFormattedRecurringEvents] = useState([])
 
   const [sectionData, setSectionData] = useState([])
+  const [shoutData, setShoutData] = useState({})
 
   const [randomNumber, setRandomNumber] = useState(1)
   const [slideData, setSlideData] = useState([])
@@ -69,11 +70,21 @@ const IndexPage = () => {
     })
   }
 
+  const fetchShoutData = id => {
+    axios({
+      url: `https://data.prod.gonation.com/profile/shoutsnew/${id}`,
+      adapter: jsonAdapter,
+    }).then(res => {
+      setShoutData(res.data.shout)
+    })
+  }
+
   // Make requests when page loads
   useEffect(() => {
     requestMenuData(gonationID)
     requestEventData(gonationID)
     requestRecurringEventData(gonationID)
+    fetchShoutData(gonationID)
   }, [])
 
   // todo render ALL prices
@@ -233,10 +244,6 @@ const IndexPage = () => {
       )
     }
   }, [isLoading, menuData, recurringData])
-
-  const pickRandom = () => {
-    setRandomNumber(Math.floor(Math.random() * 2) + 1)
-  }
 
   // const allData = sectionData
 
