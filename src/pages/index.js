@@ -32,9 +32,9 @@ const IndexPage = () => {
 
   const [slideDuration, setSlideDuration] = useState(15000)
   const [activeTypes, setActiveTypes] = useState([
-    // "item",
-    // "event",
-    // "section",
+    "item",
+    "event",
+    "section",
     "shout",
   ])
 
