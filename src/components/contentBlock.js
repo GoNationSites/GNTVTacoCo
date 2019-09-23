@@ -1,4 +1,7 @@
-import React from "react"
+import React, { useState } from "react"
+import EventCountdown from "./eventCountdown"
+import RecurringSlide from "./RecurringSlide"
+import ShoutBlock from "./ShoutBlock"
 
 const ContentBlock = ({
   title,
@@ -7,14 +10,20 @@ const ContentBlock = ({
   textPositioningId,
   isTypeCard,
   type,
+  image,
+  eventType,
+  starts,
+  ends,
+  eventDays,
 }) => {
+  const [blockType, setBlockType] = useState("default")
   const renderPrices = () => price.map(price => <span>$ {price.price}</span>)
 
   const handleNoPrices = () => {
     console.log("inside handle no prices case, price is: ", price)
   }
 
-  return (
+  const defaultContentBlock = () => (
     <div
       className={`content-block  ${isTypeCard ? "content-block__card" : ""} `}
     >
@@ -27,6 +36,47 @@ const ContentBlock = ({
       </p>
     </div>
   )
+
+  const handleEventType = () => {
+    console.log("eventType in handle is: ", eventType)
+    if (eventType === "regular") {
+      return (
+        <EventCountdown
+          title={title}
+          description={description}
+          image={image}
+          starts={starts}
+          ends={ends}
+        />
+      )
+    }
+    if (eventType === "recurring") {
+      return (
+        <RecurringSlide
+          title={title}
+          description={description}
+          image={image}
+          eventDays={eventDays}
+        />
+      )
+    }
+  }
+
+  const RenderBlockType = () => {
+    switch (type) {
+      case "event":
+        return handleEventType()
+        break
+      case "shout":
+        return <ShoutBlock />
+        break
+      default:
+        return defaultContentBlock()
+        break
+    }
+  }
+
+  return <React.Fragment>{RenderBlockType()}</React.Fragment>
 }
 
 export default ContentBlock

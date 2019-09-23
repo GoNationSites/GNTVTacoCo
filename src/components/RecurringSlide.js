@@ -18,6 +18,8 @@ const RecurringSlide = ({
     eventDays ? "recurring" : "regular"
   )
 
+  console.log("eventDays: ", eventDays)
+
   const checkIfEventIsOnCurrentDay = () => {
     const currentDay = dayjs()
       .format("dddd")
@@ -51,7 +53,7 @@ const RecurringSlide = ({
 
   const renderHappeningNowView = () => (
     <div className={`countdown-wrapper`}>
-      <p>{renderEventDays()}</p>
+      <p>Happening every: {renderEventDays()}</p>
       <h1 className="event-title">{title}</h1>
 
       <h2>
@@ -70,7 +72,7 @@ const RecurringSlide = ({
   const renderUpcomingView = () => (
     <div className={`countdown-wrapper`}>
       <h3>Come in on...</h3>
-      <p>{renderEventDays()}</p>
+      <p>Happening every: {renderEventDays()}</p>
       <h3>For</h3>
       <h1 className="event-title">{title}</h1>
       <h2>
