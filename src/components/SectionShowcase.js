@@ -14,9 +14,9 @@ const SectionShowcase = ({ sectionName, items }) => {
 
   const getCardBackground = image => {
     return {
-      background: `url(${optimizeImage(image, 100)})`,
-      backgroundPosition: "center",
-      backgroundSize: "cover",
+      background: `url(${optimizeImage(image, 100)}) center center / cover`,
+      // backgroundPosition: "center",
+      // backgroundSize: "cover",
     }
   }
 
