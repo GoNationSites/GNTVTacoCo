@@ -297,7 +297,7 @@ const IndexPage = () => {
           slideData.length > 0 &&
           slideData.map(item => (
             <Slide
-              slideStyleType={"fullImageBG"}
+              slideStyleType={"sideBySideView"}
               showcaseType={"default"}
               data={item}
             />
