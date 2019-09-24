@@ -48,6 +48,7 @@ const IndexPage = () => {
       url: `https://data.prod.gonation.com/pl/get?profile_id=${id}`,
       adapter: jsonAdapter,
     }).then(res => {
+      console.log("menu response is: ")
       setMenuData(res.data[0])
     })
   }
@@ -57,7 +58,6 @@ const IndexPage = () => {
       url: `https://data.prod.gonation.com/profile/events?profile_id=${id}`,
       adapter: jsonAdapter,
     }).then(res => {
-      console.log("res is: ", res)
       setEventData(res.data.events)
     })
   }
@@ -93,7 +93,6 @@ const IndexPage = () => {
 
   const formattedMenuDataArr = []
   const buildSection = element => {
-    console.log("element:!! ", element)
     element.inventory.forEach(item => {
       if (!item.section) {
         if (item.item.photo_id !== null) {
@@ -217,7 +216,6 @@ const IndexPage = () => {
 
   const formatShoutData = () => {
     const formattedShout = []
-    console.log("!", shoutData)
     formattedShout.push({
       type: "shout",
       description: shoutData.shout.text,
@@ -225,7 +223,6 @@ const IndexPage = () => {
       shoutedAt: shoutData.shout.updatedAt,
       image: `${shoutData.imageBaseUrl}/${shoutData.shout.image.image.cloudinaryId}`,
     })
-    console.log(formattedShout)
     setFormattedShoutData(formattedShout)
   }
 
@@ -239,7 +236,6 @@ const IndexPage = () => {
       formatRecurringData()
     }
     if (activeTypes.includes("event") && eventData.length) {
-      console.log("event data")
       formatEventData()
     }
     if (shoutData.hasOwnProperty("shout") && activeTypes.includes("shout")) {
@@ -258,7 +254,6 @@ const IndexPage = () => {
       setIsLoading(false)
     }
     if (!isLoading) {
-      console.log("im here, : ", formattedRecurringEvents, formattedMenu)
       setSlideData(
         shuffleArray(
           formattedRecurringEvents
