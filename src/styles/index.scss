@@ -93,3 +93,7 @@ p {
         margin-bottom: 1.5rem;
     }
 }
+
+.select:not(.is-multiple):not(.is-loading)::after {
+    display: none;
+}

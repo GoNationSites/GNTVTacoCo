@@ -4,7 +4,6 @@ import wood from "../images/wood.jpg"
 import optimizeImage from "../helpers/cloudinaryOptimization"
 import shuffleArray from "../helpers/shuffleArray"
 const SectionShowcase = ({ sectionName, items }) => {
-  console.log("items inside of sectionShowcase: ", items)
   const sectionItems = shuffleArray(items)
   const background = {
     background: `url(${wood})`,

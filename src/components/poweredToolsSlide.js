@@ -12,6 +12,14 @@ const PoweredToolsSlide = props => {
     console.log(event.target.value)
   }
 
+  const handleListView = () => {
+    props.setIsListView(true)
+  }
+
+  const handleDefaultView = () => {
+    props.setIsListView(false)
+  }
+
   return (
     <div
       className={`powered-by-bar ${
@@ -118,24 +126,45 @@ const PoweredToolsSlide = props => {
             </label>
           </div>
 
-          <div className="control full-width">
-            <h4>Display Single Slide</h4>
-            <p>
-              This is useful for showcasing a new menu item, or event. Have an
-              important message to your customers? Select the shout!
-            </p>
-            <div className="select">
-              <select>
-                <option>Select dropdown</option>
-                <option>Menu Item A</option>
-                <option>Menu Item B</option>
-                <option>Shout</option>
-              </select>
+          <div className="control full-width columns">
+            <div className="column">
+              <h4>TV Display Type: </h4>
+              <p>
+                Shuffle, Side by side, and Full Screen are a great way to
+                showcase your food/items/events with images. List View will show
+                your customers everything you have to offer.
+              </p>
+              <div className="select">
+                <label className="radio">
+                  <input type="radio" name="isList" onChange={handleListView} />
+                  Show List View of all data
+                </label>
+                <label className="radio">
+                  <input
+                    type="radio"
+                    name="isList"
+                    onChange={handleDefaultView}
+                  />
+                  Default
+                </label>
+              </div>
+              <div className="flex-down">
+                <h4>Choose your sections to diplay:</h4>
+                {props.isListView
+                  ? props.listData.map(section => (
+                      <label className="checkbox">
+                        <input
+                          type="checkbox"
+                          name="contentType"
+                          value="shout"
+                          checked
+                        />
+                        {section.name}
+                      </label>
+                    ))
+                  : ""}
+              </div>
             </div>
-            <label className="radio">
-              <input type="radio" name="isList" />
-              Show List View of all data
-            </label>
           </div>
         </form>
       </div>

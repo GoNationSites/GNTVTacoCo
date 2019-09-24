@@ -19,17 +19,14 @@ const Slide = ({ data, showcaseType, slideStyleType }) => {
   )
   const getDataType = () => data.type
   const handleListType = () => {
-    console.log("handling list type")
+    // console.log("handling list type")
   }
 
   // generate random styles. Either full background or side by side view.
   const randomlyPickSlideStyle = () => {
-    console.log("getRandomNumber: ", randomNumber)
     if (randomNumber == 0) {
-      console.log("set side by side")
       setDisplayedSlide("sideBySideView")
     } else if (randomNumber == 1) {
-      console.log("set full")
       setDisplayedSlide("fullImageBG")
     } else {
       setDisplayedSlide("fullImageBG")
@@ -68,7 +65,7 @@ const Slide = ({ data, showcaseType, slideStyleType }) => {
         setDisplayedSlide("sectionShowcase")
         break
       default:
-        console.log("error: invalid data type")
+        console.error("error: invalid data type")
         break
     }
   }
@@ -89,7 +86,6 @@ const Slide = ({ data, showcaseType, slideStyleType }) => {
   }, [])
 
   const getSlideStyle = () => {
-    console.log("displayed slide: ", displayedSlide)
     switch (displayedSlide) {
       case "fullImageBG":
         return (

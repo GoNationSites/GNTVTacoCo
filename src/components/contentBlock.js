@@ -21,7 +21,7 @@ const ContentBlock = ({
   const renderPrices = () => price.map(price => <span>$ {price.price}</span>)
 
   const handleNoPrices = () => {
-    console.log("inside handle no prices case, price is: ", price)
+    // console.log("inside handle no prices case, price is: ", price)
   }
 
   const defaultContentBlock = () => (
@@ -39,7 +39,7 @@ const ContentBlock = ({
   )
 
   const handleEventType = () => {
-    console.log("eventType in handle is: ", eventType)
+    // console.log("eventType in handle is: ", eventType)
     if (eventType === "regular") {
       return (
         <EventCountdown
@@ -69,7 +69,7 @@ const ContentBlock = ({
         return handleEventType()
         break
       case "shout":
-        console.log("%%%%%%%%%", description)
+        // console.log("%%%%%%%%%", description)
         return <ShoutBlock description={description} shoutedAt={shoutedAt} />
         break
       default:
