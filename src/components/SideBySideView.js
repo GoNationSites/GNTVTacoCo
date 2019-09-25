@@ -1,6 +1,7 @@
 import React from "react"
 import ContentBlock from "./contentBlock"
 import wood from "../images/wood.jpg"
+
 const SideBySideView = ({
   title,
   price,
@@ -8,6 +9,8 @@ const SideBySideView = ({
   image,
   textPositioning,
   isTypeCard,
+  shoutedAt,
+  type,
 }) => {
   const background = {
     background: `url(${wood})`,
@@ -15,9 +18,16 @@ const SideBySideView = ({
     backgroundSize: "cover",
   }
   return (
-    <div className={`side-by-side-container`} style={background}>
-      <div className="img-wrapper">
-        <img src={image}></img>
+    <div
+      className={`side-by-side-container columns is-marginless ${
+        Math.floor(Math.random() * Math.floor(2)) === 0 ? "is-last" : "is-first"
+      }`}
+      style={background}
+    >
+      <div className={`column is-one-fourth img-col  `}>
+        <div className="img-wrapper">
+          <img src={image}></img>
+        </div>
       </div>
 
       <ContentBlock
@@ -26,6 +36,9 @@ const SideBySideView = ({
         description={description}
         textPositioning={textPositioning}
         isTypeCard
+        isSideBySide
+        shoutedAt={shoutedAt}
+        type={type}
       ></ContentBlock>
     </div>
   )

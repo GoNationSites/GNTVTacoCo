@@ -35,10 +35,10 @@ const IndexPage = () => {
 
   const [slideDuration, setSlideDuration] = useState(15000)
   const [activeTypes, setActiveTypes] = useState([
-    // "item",
-    // "event",
+    "item",
+    "event",
     "section",
-    // "shout",
+    "shout",
   ])
 
   // end form state
@@ -51,7 +51,7 @@ const IndexPage = () => {
       url: `https://data.prod.gonation.com/pl/get?profile_id=${id}`,
       adapter: jsonAdapter,
     }).then(res => {
-      // console.log("res.data", res.data)
+      console.log("res.data", res.data)
       setMenuData(res.data)
     })
   }
@@ -101,7 +101,7 @@ const IndexPage = () => {
       element.inventory.forEach(item => {
         console.log("element inside inventory loop: ", item)
         if (!item.section) {
-          if (item.item.photo_id !== null || imgOnly) {
+          if (item.item.photo_id !== null || !imgOnly) {
             formattedMenuDataArr.push({
               type: "item",
               name: item.item.name,
@@ -117,7 +117,7 @@ const IndexPage = () => {
       })
     } else {
       console.log("HERE!: ", element)
-      if (element.item.photo_id !== null || imgOnly) {
+      if (element.item.photo_id !== null || !imgOnly) {
         formattedMenuDataArr.push({
           type: "item",
           name: element.item.name,
@@ -183,15 +183,16 @@ const IndexPage = () => {
         }
       }
     })
-    // const limitedResults = sortedSections.filter(
-    //   section => section.items.length >= 4
-    // )
+    const limitedResults = sortedSections.filter(
+      section => section.items.length >= 4
+    )
     setSectionData(sortedSections)
   }
 
   // Helps format the menu
   const runMenu = () => {
-    // console.log("ERROR HERE: ", menuData)
+    console.log("ERROR HERE: ", menuData)
+    //Theres only 1 powered list id here unlike beef barl
     menuData.forEach(poweredList => {
       // console.log("poweredList: ", poweredList)
       poweredList.inventory.forEach(element => {
@@ -252,59 +253,23 @@ const IndexPage = () => {
 
   // This effect formats the data the way we need it for the slide component
 
-  useEffect(() => {
-    if (
-      activeTypes.includes("item") ||
-      (activeTypes.includes("section") && menuData.length)
-    ) {
-      runMenu()
-    }
-    if (activeTypes.includes("event") && recurringData.length) {
-      formatRecurringData()
-    }
-    if (activeTypes.includes("event") && eventData.length) {
-      formatEventData()
-    }
-    if (shoutData.hasOwnProperty("shout") && activeTypes.includes("shout")) {
-      formatShoutData()
-    }
-  }, [menuData, recurringData, eventData, shoutData])
-
-  useEffect(() => {
-    if (menuData.length && recurringData.length && eventData && shoutData) {
-      setIsLoading(false)
-    }
-    if (!isLoading) {
-      // console.log("formattedmenu data: ", formattedMenu)
-      setSlideData(
-        shuffleArray(
-          formattedRecurringEvents
-            // .concat(formattedMenu)
-            .concat(sectionData)
-            .concat(formattedEventData)
-            .concat(formattedShoutData)
-        )
-      )
-    }
-  }, [isLoading, menuData, recurringData, shoutData])
-
   // const allData = sectionData
 
   console.log("all data is now: ", slideData)
-  console.log(formattedMenu)
+  // console.log(formattedMenu)
   // const mapped = formattedMenu.map(function(el, i) {
   //   return { index: i, value: el.sectionName.toLowerCase() }
   // })
-  formattedMenu.sort((a, b) => {
-    if (a.sectionName > b.sectionName) {
-      return 1
-    }
-    if (a.sectionName < b.sectionName) {
-      return -1
-    }
-    return 0
-  })
-  console.log("new mapped: ", formattedMenu)
+  const sortFormattedMenu = () =>
+    formattedMenu.sort((a, b) => {
+      if (a.sectionName > b.sectionName) {
+        return 1
+      }
+      if (a.sectionName < b.sectionName) {
+        return -1
+      }
+      return 0
+    })
 
   // handles pagination of list view.
   const paginatedItems = (perPage, items) => {
@@ -325,7 +290,77 @@ const IndexPage = () => {
     return paginatedItemsArr
   }
 
-  console.log("PAGINATED ITEMS ARE: ", paginatedItems(6, formattedMenu))
+  useEffect(() => {
+    if (
+      (activeTypes.includes("item") || activeTypes.includes("section")) &&
+      menuData.length
+    ) {
+      console.log("first")
+      runMenu()
+    }
+    if (activeTypes.includes("event") && recurringData.length) {
+      formatRecurringData()
+    }
+    if (activeTypes.includes("event") && eventData.length) {
+      formatEventData()
+    }
+    if (shoutData.hasOwnProperty("shout") && activeTypes.includes("shout")) {
+      formatShoutData()
+    }
+  }, [menuData, recurringData, eventData, shoutData])
+
+  useEffect(() => {
+    if (menuData.length && recurringData.length && eventData && shoutData) {
+      console.log("loading")
+      setIsLoading(false)
+    }
+    if (!isLoading) {
+      console.log("we shouldn't even be here")
+      // console.log("formattedmenu data: ", formattedMenu)
+      if (!isListView) {
+        console.log("fsa;fdjsaf;", isListView)
+        setSlideData(
+          shuffleArray(
+            formattedRecurringEvents
+              .concat(formattedMenu)
+              .concat(sectionData)
+              .concat(formattedEventData)
+              .concat(formattedShoutData)
+          )
+        )
+      }
+    }
+  }, [isLoading, menuData, recurringData, shoutData, isListView])
+
+  // console.log("PAGINATED ITEMS ARE: ", paginatedItems(8, formattedMenu))
+
+  const renderType = () => {
+    console.log("FIRST", sortFormattedMenu(), isListView)
+    if (isListView && sortFormattedMenu().length) {
+      console.log("trying list view")
+      return paginatedItems(8, sortFormattedMenu()).map(pile => (
+        <Slide
+          slideStyleType={"sideBySideView"}
+          showcaseType="list"
+          data={pile}
+        />
+      ))
+    } else {
+      console.log("normal view", slideData)
+      return (
+        !isLoading &&
+        slideData.length > 0 &&
+        slideData.map(item => (
+          <Slide
+            slideStyleType={"sideBySideView"}
+            showcaseType={"default"}
+            data={item}
+          />
+        ))
+      )
+    }
+  }
+
   return (
     <Layout>
       <PoweredToolsSlide
@@ -345,25 +380,9 @@ const IndexPage = () => {
         showIndicators={false}
         transitionTime={1000}
         autoPlay={true}
-        interval={slideDuration}
+        interval={100000}
       >
-        {isListView
-          ? paginatedItems(6, formattedMenu).map(pile => (
-              <Slide
-                slideStyleType={"list"}
-                showcaseType={"default"}
-                data={pile}
-              />
-            ))
-          : !isLoading &&
-            slideData.length > 0 &&
-            slideData.map(item => (
-              <Slide
-                slideStyleType={"sideBySideView"}
-                showcaseType={"default"}
-                data={item}
-              />
-            ))}
+        {renderType()}
       </Carousel>
     </Layout>
   )

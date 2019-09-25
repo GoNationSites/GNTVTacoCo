@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 
 const PoweredToolsSlide = props => {
+  console.log("props!", props)
   const [currentDuration, setCurrentDuration] = useState(props.duration)
   const [showForm, setShowForm] = useState(false)
   const handleDurationChange = event => {
@@ -136,7 +137,12 @@ const PoweredToolsSlide = props => {
               </p>
               <div className="select">
                 <label className="radio">
-                  <input type="radio" name="isList" onChange={handleListView} />
+                  <input
+                    type="radio"
+                    name="isList"
+                    onChange={handleListView}
+                    checked={props.isListView}
+                  />
                   Show List View of all data
                 </label>
                 <label className="radio">
@@ -144,6 +150,7 @@ const PoweredToolsSlide = props => {
                     type="radio"
                     name="isList"
                     onChange={handleDefaultView}
+                    checked={!props.isListView}
                   />
                   Default
                 </label>

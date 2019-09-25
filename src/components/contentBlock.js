@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import EventCountdown from "./eventCountdown"
 import RecurringSlide from "./RecurringSlide"
 import ShoutBlock from "./ShoutBlock"
+import dayjs from "dayjs"
 
 const ContentBlock = ({
   title,
@@ -16,6 +17,7 @@ const ContentBlock = ({
   ends,
   eventDays,
   shoutedAt,
+  isSideBySide,
 }) => {
   const [blockType, setBlockType] = useState("default")
   const renderPrices = () => price.map(price => <span>$ {price.price}</span>)
@@ -26,14 +28,21 @@ const ContentBlock = ({
 
   const defaultContentBlock = () => (
     <div
-      className={`content-block  ${isTypeCard ? "content-block__card" : ""} `}
+      className={`content-block  ${isTypeCard ? "content-block__card " : ""} ${
+        isSideBySide ? "column" : ""
+      }`}
     >
       <h1>{title}</h1>
-      <p>{description}</p>
+      <p className="content-description">{description}</p>
       <p>
         {type === "item" && price.length && Array.isArray(price)
           ? renderPrices()
           : handleNoPrices()}
+      </p>
+      <p className="shout-date">
+        {shoutedAt !== ""
+          ? dayjs(shoutedAt).format("dddd MMMM MM, hh:ss A")
+          : ""}
       </p>
     </div>
   )

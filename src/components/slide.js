@@ -7,19 +7,21 @@ import optimizeImage from "../helpers/cloudinaryOptimization"
 import wood from "../images/wood.jpg"
 import convertTime from "../helpers/convertTime"
 import EventCountdown from "./eventCountdown"
+import FullListView from "./fullListView"
 
 // data: data object
 // showcaseType: default or list
 // slideStyleType: random, fullBG, Sidebyside -- Random by default
 
 const Slide = ({ data, showcaseType, slideStyleType }) => {
+  console.log("rerender: ", data, showcaseType, slideStyleType)
   const [displayedSlide, setDisplayedSlide] = useState()
   const [randomNumber, setRandomNumber] = useState(
     Math.floor(Math.random() * Math.floor(2))
   )
-  const getDataType = () => data.type
+  const getDataType = () => (showcaseType === "list" ? "list" : data.type)
   const handleListType = () => {
-    // console.log("handling list type")
+    console.log("handling list type")
   }
 
   // generate random styles. Either full background or side by side view.
@@ -51,6 +53,7 @@ const Slide = ({ data, showcaseType, slideStyleType }) => {
   // handle slides based on data type
   const handleDefaultType = () => {
     const type = getDataType()
+    console.log("type is: ", type)
     switch (type) {
       case "event":
         handleSimpleData("event")
@@ -72,6 +75,7 @@ const Slide = ({ data, showcaseType, slideStyleType }) => {
 
   // check if showcaseType is list, section, or default
   const handleStyleType = () => {
+    console.log("showcaseType: ", showcaseType)
     switch (showcaseType) {
       case "list":
         handleListType()
@@ -82,44 +86,60 @@ const Slide = ({ data, showcaseType, slideStyleType }) => {
   }
 
   useEffect(() => {
+    console.log("BOP")
     handleStyleType()
   }, [])
 
   const getSlideStyle = () => {
-    switch (displayedSlide) {
-      case "fullImageBG":
-        return (
-          <FullImageBG
-            type={data.type}
-            title={data.name}
-            description={data.description}
-            price={data.price ? data.price : ""}
-            image={optimizeImage(data.image, 200)}
-            eventDays={data.days ? data.days : ""}
-            starts={data.starts}
-            ends={data.ends}
-            eventType={data.eventType}
-            textPositioningId={Math.floor(Math.random() * Math.floor(2))}
-            shoutedAt={data.shoutedAt}
-          />
-        )
-      case "sideBySideView":
-        return (
-          <SideBySideView
-            type={data.type}
-            title={data.name}
-            description={data.desc}
-            price={data.price ? data.price : ""}
-            image={optimizeImage(data.image, 200)}
-            eventDays={data.days ? data.days : ""}
-            textPositioning="right"
-            isTypeCard={false}
-          />
-        )
-      case "sectionShowcase":
-        return (
-          <SectionShowcase items={data.items} sectionName={data.sectionName} />
-        )
+    console.log("boop", displayedSlide)
+    console.log(showcaseType)
+    if (showcaseType === "list") {
+      console.log("do nothing")
+      return <FullListView data={data} />
+    } else {
+      console.log("data before error: ", data)
+      switch (displayedSlide) {
+        case "fullImageBG":
+          return (
+            <FullImageBG
+              type={data.type}
+              title={data.name}
+              description={data.description}
+              price={data.price ? data.price : ""}
+              image={optimizeImage(data.image, 200)}
+              eventDays={data.days ? data.days : ""}
+              starts={data.starts}
+              ends={data.ends}
+              eventType={data.eventType}
+              textPositioningId={Math.floor(Math.random() * Math.floor(2))}
+              shoutedAt={data.shoutedAt}
+            />
+          )
+        case "sideBySideView":
+          return (
+            <SideBySideView
+              type={data.type}
+              title={data.name}
+              description={data.description}
+              price={data.price ? data.price : ""}
+              image={optimizeImage(data.image, 200)}
+              eventDays={data.days ? data.days : ""}
+              textPositioning="right"
+              isTypeCard={false}
+              shoutedAt={data.shoutedAt ? data.shoutedAt : ""}
+            />
+          )
+        case "sectionShowcase":
+          console.log("data.items being entered: ", data.items)
+          return (
+            <SectionShowcase
+              items={data.items}
+              sectionName={data.sectionName}
+            />
+          )
+        default:
+          break
+      }
     }
   }
 
