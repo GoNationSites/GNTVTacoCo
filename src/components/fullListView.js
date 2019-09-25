@@ -9,7 +9,6 @@ const FullListView = props => {
     backgroundPosition: "center",
     backgroundSize: "cover",
   }
-  console.log(props)
   return (
     <div className="list-view-wrap" style={background}>
       <div class="logo-background">

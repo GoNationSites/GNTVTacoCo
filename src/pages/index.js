@@ -29,9 +29,11 @@ const IndexPage = () => {
   const [formattedEventData, setFormattedEventData] = useState([])
 
   // !This is temporary: will be used in the form / transfered to state
-  const imgOnly = true
+
   // form state
   const [isListView, setIsListView] = useState(false)
+
+  const imgOnly = isListView ? false : true
 
   const [slideDuration, setSlideDuration] = useState(15000)
   const [activeTypes, setActiveTypes] = useState([
@@ -51,7 +53,6 @@ const IndexPage = () => {
       url: `https://data.prod.gonation.com/pl/get?profile_id=${id}`,
       adapter: jsonAdapter,
     }).then(res => {
-      console.log("res.data", res.data)
       setMenuData(res.data)
     })
   }
@@ -96,10 +97,8 @@ const IndexPage = () => {
 
   const formattedMenuDataArr = []
   const buildSection = element => {
-    // console.log("element is: ", element)
     if (element.inventory) {
       element.inventory.forEach(item => {
-        console.log("element inside inventory loop: ", item)
         if (!item.section) {
           if (item.item.photo_id !== null || !imgOnly) {
             formattedMenuDataArr.push({
@@ -116,7 +115,6 @@ const IndexPage = () => {
         }
       })
     } else {
-      console.log("HERE!: ", element)
       if (element.item.photo_id !== null || !imgOnly) {
         formattedMenuDataArr.push({
           type: "item",
@@ -136,7 +134,6 @@ const IndexPage = () => {
   const sortedSections = []
 
   const buildSortedSectionData = data => {
-    console.log("building sorted sections", data)
     data.forEach((item, itmID) => {
       let sectionExists = true
       // For the first time through, we automatically populate the array
@@ -191,7 +188,6 @@ const IndexPage = () => {
 
   // Helps format the menu
   const runMenu = () => {
-    console.log("ERROR HERE: ", menuData)
     //Theres only 1 powered list id here unlike beef barl
     menuData.forEach(poweredList => {
       // console.log("poweredList: ", poweredList)
@@ -255,7 +251,6 @@ const IndexPage = () => {
 
   // const allData = sectionData
 
-  console.log("all data is now: ", slideData)
   // console.log(formattedMenu)
   // const mapped = formattedMenu.map(function(el, i) {
   //   return { index: i, value: el.sectionName.toLowerCase() }
@@ -295,7 +290,6 @@ const IndexPage = () => {
       (activeTypes.includes("item") || activeTypes.includes("section")) &&
       menuData.length
     ) {
-      console.log("first")
       runMenu()
     }
     if (activeTypes.includes("event") && recurringData.length) {
@@ -307,18 +301,14 @@ const IndexPage = () => {
     if (shoutData.hasOwnProperty("shout") && activeTypes.includes("shout")) {
       formatShoutData()
     }
-  }, [menuData, recurringData, eventData, shoutData])
+  }, [menuData, recurringData, eventData, shoutData, isListView])
 
   useEffect(() => {
     if (menuData.length && recurringData.length && eventData && shoutData) {
-      console.log("loading")
       setIsLoading(false)
     }
     if (!isLoading) {
-      console.log("we shouldn't even be here")
-      // console.log("formattedmenu data: ", formattedMenu)
       if (!isListView) {
-        console.log("fsa;fdjsaf;", isListView)
         setSlideData(
           shuffleArray(
             formattedRecurringEvents
@@ -335,9 +325,7 @@ const IndexPage = () => {
   // console.log("PAGINATED ITEMS ARE: ", paginatedItems(8, formattedMenu))
 
   const renderType = () => {
-    console.log("FIRST", sortFormattedMenu(), isListView)
     if (isListView && sortFormattedMenu().length) {
-      console.log("trying list view")
       return paginatedItems(8, sortFormattedMenu()).map(pile => (
         <Slide
           slideStyleType={"sideBySideView"}
@@ -346,13 +334,12 @@ const IndexPage = () => {
         />
       ))
     } else {
-      console.log("normal view", slideData)
       return (
         !isLoading &&
         slideData.length > 0 &&
         slideData.map(item => (
           <Slide
-            slideStyleType={"sideBySideView"}
+            slideStyleType={"random"}
             showcaseType={"default"}
             data={item}
           />
@@ -380,7 +367,7 @@ const IndexPage = () => {
         showIndicators={false}
         transitionTime={1000}
         autoPlay={true}
-        interval={100000}
+        interval={slideDuration}
       >
         {renderType()}
       </Carousel>

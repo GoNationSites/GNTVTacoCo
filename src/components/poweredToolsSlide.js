@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 
 const PoweredToolsSlide = props => {
-  console.log("props!", props)
   const [currentDuration, setCurrentDuration] = useState(props.duration)
   const [showForm, setShowForm] = useState(false)
   const handleDurationChange = event => {
@@ -10,7 +9,7 @@ const PoweredToolsSlide = props => {
   }
 
   const handleContentTypeChange = event => {
-    console.log(event.target.value)
+    // console.log(event.target.value)
   }
 
   const handleListView = () => {
@@ -163,8 +162,8 @@ const PoweredToolsSlide = props => {
                         <input
                           type="checkbox"
                           name="contentType"
-                          value="shout"
                           checked
+                          // onChange={handleSectionToggle}
                         />
                         {section.name}
                       </label>

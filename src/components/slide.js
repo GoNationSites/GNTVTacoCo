@@ -14,15 +14,12 @@ import FullListView from "./fullListView"
 // slideStyleType: random, fullBG, Sidebyside -- Random by default
 
 const Slide = ({ data, showcaseType, slideStyleType }) => {
-  console.log("rerender: ", data, showcaseType, slideStyleType)
   const [displayedSlide, setDisplayedSlide] = useState()
   const [randomNumber, setRandomNumber] = useState(
     Math.floor(Math.random() * Math.floor(2))
   )
   const getDataType = () => (showcaseType === "list" ? "list" : data.type)
-  const handleListType = () => {
-    console.log("handling list type")
-  }
+  const handleListType = () => {}
 
   // generate random styles. Either full background or side by side view.
   const randomlyPickSlideStyle = () => {
@@ -53,7 +50,6 @@ const Slide = ({ data, showcaseType, slideStyleType }) => {
   // handle slides based on data type
   const handleDefaultType = () => {
     const type = getDataType()
-    console.log("type is: ", type)
     switch (type) {
       case "event":
         handleSimpleData("event")
@@ -75,7 +71,6 @@ const Slide = ({ data, showcaseType, slideStyleType }) => {
 
   // check if showcaseType is list, section, or default
   const handleStyleType = () => {
-    console.log("showcaseType: ", showcaseType)
     switch (showcaseType) {
       case "list":
         handleListType()
@@ -86,18 +81,13 @@ const Slide = ({ data, showcaseType, slideStyleType }) => {
   }
 
   useEffect(() => {
-    console.log("BOP")
     handleStyleType()
   }, [])
 
   const getSlideStyle = () => {
-    console.log("boop", displayedSlide)
-    console.log(showcaseType)
     if (showcaseType === "list") {
-      console.log("do nothing")
       return <FullListView data={data} />
     } else {
-      console.log("data before error: ", data)
       switch (displayedSlide) {
         case "fullImageBG":
           return (
@@ -112,7 +102,7 @@ const Slide = ({ data, showcaseType, slideStyleType }) => {
               ends={data.ends}
               eventType={data.eventType}
               textPositioningId={Math.floor(Math.random() * Math.floor(2))}
-              shoutedAt={data.shoutedAt}
+              shoutedAt={data.shoutedAt ? data.shoutedAt : ""}
             />
           )
         case "sideBySideView":
@@ -130,7 +120,6 @@ const Slide = ({ data, showcaseType, slideStyleType }) => {
             />
           )
         case "sectionShowcase":
-          console.log("data.items being entered: ", data.items)
           return (
             <SectionShowcase
               items={data.items}
