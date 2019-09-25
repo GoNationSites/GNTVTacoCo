@@ -324,9 +324,11 @@ const IndexPage = () => {
 
   // console.log("PAGINATED ITEMS ARE: ", paginatedItems(8, formattedMenu))
 
+  console.log("formattedMenu: ", formattedMenu, "slideData: ", slideData)
+
   const renderType = () => {
     if (isListView && sortFormattedMenu().length) {
-      return paginatedItems(8, sortFormattedMenu()).map(pile => (
+      return paginatedItems(12, sortFormattedMenu()).map(pile => (
         <Slide
           slideStyleType={"sideBySideView"}
           showcaseType="list"

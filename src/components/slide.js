@@ -14,6 +14,14 @@ import FullListView from "./fullListView"
 // slideStyleType: random, fullBG, Sidebyside -- Random by default
 
 const Slide = ({ data, showcaseType, slideStyleType }) => {
+  // console.log(
+  //   "Data coming into slide: ",
+  //   data,
+  //   "showcaseType: ",
+  //   showcaseType,
+  //   "slideStyleType: ",
+  //   slideStyleType
+  // )
   const [displayedSlide, setDisplayedSlide] = useState()
   const [randomNumber, setRandomNumber] = useState(
     Math.floor(Math.random() * Math.floor(2))
@@ -90,6 +98,11 @@ const Slide = ({ data, showcaseType, slideStyleType }) => {
     } else {
       switch (displayedSlide) {
         case "fullImageBG":
+          if (data.image === undefined) {
+            console.log("ERROR!!", data, data.image)
+          } else {
+            console.log("good!!", data, data.image)
+          }
           return (
             <FullImageBG
               type={data.type}
