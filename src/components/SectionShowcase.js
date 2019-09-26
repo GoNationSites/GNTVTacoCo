@@ -39,6 +39,7 @@ const SectionShowcase = ({ sectionName, items }) => {
             if (idx < 5) {
               return (
                 <div
+                  key={`${item}-${idx}`}
                   className={`column  ${idx > 2 ? "is-half" : "is-one-third"}`}
                 >
                   {getCard(item)}
@@ -52,7 +53,9 @@ const SectionShowcase = ({ sectionName, items }) => {
     return (
       <div class="columns is-multiline section-data-wrap">
         {items.map((item, idx) => (
-          <div className="column is-half">{getCard(item)}</div>
+          <div key={`${item}-${idx}`} className="column is-half">
+            {getCard(item)}
+          </div>
         ))}
       </div>
     )

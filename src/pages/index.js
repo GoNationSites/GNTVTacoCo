@@ -310,13 +310,14 @@ const IndexPage = () => {
     if (!isLoading) {
       if (!isListView) {
         setSlideData(
-          // shuffleArray(
-          formattedRecurringEvents
-            .concat(formattedMenu)
-            .concat(sectionData)
-            .concat(formattedEventData)
-            .concat(formattedShoutData)
-          // )
+          shuffleArray(
+            formattedMenu
+
+              // .concat(sectionData)
+              .concat(formattedEventData)
+              .concat(formattedShoutData)
+              .concat(formattedRecurringEvents)
+          )
         )
       }
     }
@@ -340,16 +341,17 @@ const IndexPage = () => {
       <Carousel
         showThumbs={false}
         useKeyboardArrows={true}
-        showArrows={true}
-        showStatus={true}
+        showArrows={false}
+        showStatus={false}
         showIndicators={false}
         transitionTime={1000}
         autoPlay={true}
         interval={slideDuration}
       >
-        {isListView && sortFormattedMenu().length
-          ? paginatedItems(12, sortFormattedMenu()).map(pile => (
+        {!isLoading && isListView && sortFormattedMenu().length
+          ? paginatedItems(12, sortFormattedMenu()).map((pile, idx) => (
               <Slide
+                key={`${pile}-${idx}`}
                 slideStyleType={"sideBySideView"}
                 showcaseType="list"
                 data={pile}
@@ -357,13 +359,23 @@ const IndexPage = () => {
             ))
           : !isLoading &&
             slideData.length > 0 &&
-            slideData.map(item => (
-              <Slide
-                slideStyleType={"random"}
-                showcaseType={"default"}
-                data={item}
-              />
-            ))}
+            slideData
+              .filter(
+                item =>
+                  item.image !==
+                  "https://res.cloudinary.com/gonation/gonation.data.prod/default/img-itm-cover-full.png"
+              )
+              .map((item, idx) => {
+                console.log("item: ", item, idx)
+                return (
+                  <Slide
+                    key={`${item}-${idx}`}
+                    slideStyleType={"random"}
+                    // showcaseType={"default"}
+                    data={item}
+                  />
+                )
+              })}
       </Carousel>
     </Layout>
   )

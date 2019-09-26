@@ -14,6 +14,7 @@ import FullListView from "./fullListView"
 // slideStyleType: random, fullBG, Sidebyside -- Random by default
 
 const Slide = ({ data, showcaseType, slideStyleType }) => {
+  console.log("data:::", data)
   // console.log(
   //   "Data coming into slide: ",
   //   data,
@@ -31,6 +32,7 @@ const Slide = ({ data, showcaseType, slideStyleType }) => {
 
   // generate random styles. Either full background or side by side view.
   const randomlyPickSlideStyle = () => {
+    console.log("random is: ", randomNumber)
     if (randomNumber == 0) {
       setDisplayedSlide("sideBySideView")
     } else if (randomNumber == 1) {
@@ -58,6 +60,7 @@ const Slide = ({ data, showcaseType, slideStyleType }) => {
   // handle slides based on data type
   const handleDefaultType = () => {
     const type = getDataType()
+    console.log("type is: ", type)
     switch (type) {
       case "event":
         handleSimpleData("event")
@@ -133,14 +136,19 @@ const Slide = ({ data, showcaseType, slideStyleType }) => {
             />
           )
         case "sectionShowcase":
+          console.log(
+            "the reason were here is becase displayedSlide is: ",
+            displayedSlide
+          )
+          console.log("and data is: ", data)
           return (
             <SectionShowcase
               items={data.items}
               sectionName={data.sectionName}
             />
           )
-        default:
-          break
+        // default:
+        //   break
       }
     }
   }

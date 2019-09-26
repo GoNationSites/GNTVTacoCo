@@ -41,9 +41,12 @@ const RecurringSlide = ({
       .toLocaleLowerCase()
 
     if (eventType === "recurring") {
-      return daysOccuring.map(day => {
+      return daysOccuring.map((day, idx) => {
         return (
-          <span className={`evt-day ${currentDay === day ? "is-today" : ""}`}>
+          <span
+            key={`${day}-${idx}`}
+            className={`evt-day ${currentDay === day ? "is-today" : ""}`}
+          >
             {day.toUpperCase()}
           </span>
         )

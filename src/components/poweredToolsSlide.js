@@ -166,12 +166,11 @@ const PoweredToolsSlide = props => {
               <div className="flex-down">
                 <h4>Choose your sections to diplay:</h4>
                 {props.isListView
-                  ? props.listData.map(section => (
-                      <label className="checkbox">
+                  ? props.listData.map((section, idx) => (
+                      <label key={`${section}-${idx}`} className="checkbox">
                         <input
                           type="checkbox"
                           name="contentType"
-                          checked
                           // onChange={handleSectionToggle}
                         />
                         {section.name}

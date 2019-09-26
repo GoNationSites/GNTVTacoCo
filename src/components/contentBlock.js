@@ -20,7 +20,10 @@ const ContentBlock = ({
   isSideBySide,
 }) => {
   const [blockType, setBlockType] = useState("default")
-  const renderPrices = () => price.map(price => <span>$ {price.price}</span>)
+  const renderPrices = () =>
+    price.map((price, idx) => (
+      <span key={`${price}-${idx}`}>$ {price.price}</span>
+    ))
 
   const handleNoPrices = () => {
     // console.log("inside handle no prices case, price is: ", price)

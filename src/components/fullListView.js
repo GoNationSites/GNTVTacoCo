@@ -11,13 +11,16 @@ const FullListView = props => {
   }
   return (
     <div className="list-view-wrap" style={background}>
-      <div class="logo-background">
+      <div className="logo-background">
         <img src={logo}></img>
       </div>
-      <div class="list-view-content-container">
+      <div className="list-view-content-container">
         <div className="columns is-marginless is-multiline item-block-columns">
-          {props.data.map(item => (
-            <div className="item-block column is-half columns">
+          {props.data.map((item, idx) => (
+            <div
+              key={`${item}-${idx}`}
+              className="item-block column is-half columns"
+            >
               <div className="column is-paddingless is-one-third">
                 <img
                   className={`${
