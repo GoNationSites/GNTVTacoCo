@@ -326,30 +326,6 @@ const IndexPage = () => {
 
   console.log("formattedMenu: ", formattedMenu, "slideData: ", slideData)
 
-  const renderType = () => {
-    if (isListView && sortFormattedMenu().length) {
-      return paginatedItems(12, sortFormattedMenu()).map(pile => (
-        <Slide
-          slideStyleType={"sideBySideView"}
-          showcaseType="list"
-          data={pile}
-        />
-      ))
-    } else {
-      return (
-        !isLoading &&
-        slideData.length > 0 &&
-        slideData.map(item => (
-          <Slide
-            slideStyleType={"random"}
-            showcaseType={"default"}
-            data={item}
-          />
-        ))
-      )
-    }
-  }
-
   return (
     <Layout>
       <PoweredToolsSlide
@@ -371,7 +347,23 @@ const IndexPage = () => {
         autoPlay={true}
         interval={slideDuration}
       >
-        {renderType()}
+        {isListView && sortFormattedMenu().length
+          ? paginatedItems(12, sortFormattedMenu()).map(pile => (
+              <Slide
+                slideStyleType={"sideBySideView"}
+                showcaseType="list"
+                data={pile}
+              />
+            ))
+          : !isLoading &&
+            slideData.length > 0 &&
+            slideData.map(item => (
+              <Slide
+                slideStyleType={"random"}
+                showcaseType={"default"}
+                data={item}
+              />
+            ))}
       </Carousel>
     </Layout>
   )
