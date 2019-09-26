@@ -139,19 +139,28 @@ const PoweredToolsSlide = props => {
                   <input
                     type="radio"
                     name="isList"
-                    onChange={handleListView}
-                    checked={props.isListView}
+                    onChange={handleDefaultView}
+                    checked={!props.isListView}
                   />
-                  Show List View of all data
+                  Display single items
                 </label>
                 <label className="radio">
                   <input
                     type="radio"
                     name="isList"
-                    onChange={handleDefaultView}
-                    checked={!props.isListView}
+                    onChange={handleListView}
+                    checked={props.isListView}
                   />
-                  Default
+                  Display List
+                </label>
+                <label className="radio">
+                  <input
+                    type="radio"
+                    name="isBoth"
+                    // onChange={handleListView}
+                    // checked={props.isListView}
+                  />
+                  Display Both
                 </label>
               </div>
               <div className="flex-down">

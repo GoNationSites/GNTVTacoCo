@@ -310,13 +310,13 @@ const IndexPage = () => {
     if (!isLoading) {
       if (!isListView) {
         setSlideData(
-          shuffleArray(
-            formattedRecurringEvents
-              .concat(formattedMenu)
-              .concat(sectionData)
-              .concat(formattedEventData)
-              .concat(formattedShoutData)
-          )
+          // shuffleArray(
+          formattedRecurringEvents
+            .concat(formattedMenu)
+            .concat(sectionData)
+            .concat(formattedEventData)
+            .concat(formattedShoutData)
+          // )
         )
       }
     }
