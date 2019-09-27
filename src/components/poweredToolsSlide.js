@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-
+import poweredBy from "../images/poweredby.png"
 const PoweredToolsSlide = props => {
   const [currentDuration, setCurrentDuration] = useState(props.duration)
   const [showForm, setShowForm] = useState(false)
@@ -27,7 +27,7 @@ const PoweredToolsSlide = props => {
       }`}
     >
       <p className="has-text-centered" onClick={() => setShowForm(!showForm)}>
-        TV Powered By GoNation
+        <img src={poweredBy}></img>
       </p>
       <div className={`powered-tools-form-wrap ${showForm ? "" : "is-hidden"}`}>
         <form className="powered-tools-form">
