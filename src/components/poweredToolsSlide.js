@@ -1,8 +1,11 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import poweredBy from "../images/poweredby.png"
+import { filter } from "minimatch"
+import SectionToggleCheckbox from "./sectionToggleCheckbox"
 const PoweredToolsSlide = props => {
   const [currentDuration, setCurrentDuration] = useState(props.duration)
   const [showForm, setShowForm] = useState(false)
+  const [filteredArr, setFilteredArr] = useState([])
   const handleDurationChange = event => {
     setCurrentDuration(event.target.value)
     props.setSlideDuration(event.target.value)
@@ -23,6 +26,22 @@ const PoweredToolsSlide = props => {
   const handleDisplayType = type => {
     props.setDisplayType(type)
   }
+
+  const addSectionToTV = section => {
+    setFilteredArr([...filteredArr, section.name])
+    props.setFilteredOutSections(filteredArr)
+  }
+
+  const removeSectionFromTV = section => {
+    filteredArr.splice(filteredArr.indexOf(section.name), 1)
+    setFilteredArr(filteredArr)
+    props.setFilteredOutSections(filteredArr)
+  }
+  console.log("filteredArr is now: ")
+
+  useEffect(() => {
+    props.setFilteredOutSections(filteredArr)
+  }, [filteredArr])
 
   return (
     <div
@@ -167,20 +186,21 @@ const PoweredToolsSlide = props => {
                   Display Both
                 </label>
               </div>
-              <div className="flex-down">
+              <div className="flex-down control">
                 <h4>Choose your sections to diplay:</h4>
-                {props.isListView
-                  ? props.listData.map((section, idx) => (
-                      <label key={`${section}-${idx}`} className="checkbox">
-                        <input
-                          type="checkbox"
-                          name="contentType"
-                          // onChange={handleSectionToggle}
-                        />
-                        {section.name}
-                      </label>
-                    ))
-                  : ""}
+                {props.listData.map((section, idx) => {
+                  console.log("props are: ", props)
+                  return (
+                    <SectionToggleCheckbox
+                      section={section}
+                      idx={idx}
+                      setFilteredArr={setFilteredArr}
+                      addSectionToTV={addSectionToTV}
+                      removeSectionFromTV={removeSectionFromTV}
+                      // handleSectionSelection={handleSectionSelection}
+                    />
+                  )
+                })}
               </div>
             </div>
           </div>

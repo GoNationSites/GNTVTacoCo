@@ -44,6 +44,9 @@ const IndexPage = () => {
     "shout",
   ])
 
+  // This state array contains any sections the user wants filtered out of their TV
+  const [filteredOutSections, setFilteredOutSections] = useState([])
+
   // end form state
 
   // Make request for menu data
@@ -269,20 +272,25 @@ const IndexPage = () => {
 
   // handles pagination of list view.
   const paginatedItems = (perPage, items) => {
+    console.log("items indide paginated items array; ", items)
     const paginatedItemsArr = []
     let tmpArr = []
-    items.forEach((itm, idx) => {
-      if ((idx + 1) % perPage === 0) {
-        tmpArr.push(itm)
-        paginatedItemsArr.push(tmpArr)
-        tmpArr = []
-      } else {
-        tmpArr.push(itm)
-      }
-      if (tmpArr.length && idx === items.length - 1) {
-        paginatedItemsArr.push(tmpArr)
-      }
-    })
+
+    items
+      .filter(item => !filteredOutSections.includes(item.sectionName))
+      .forEach((itm, idx) => {
+        if ((idx + 1) % perPage === 0) {
+          tmpArr.push(itm)
+          paginatedItemsArr.push(tmpArr)
+          tmpArr = []
+        } else {
+          tmpArr.push(itm)
+        }
+        if (tmpArr.length && idx === items.length - 1) {
+          paginatedItemsArr.push(tmpArr)
+        }
+      })
+    console.log("paginated items array: ", paginatedItemsArr)
     return paginatedItemsArr
   }
 
@@ -335,7 +343,8 @@ const IndexPage = () => {
           .filter(
             item =>
               item.image !==
-              "https://res.cloudinary.com/gonation/gonation.data.prod/default/img-itm-cover-full.png"
+                "https://res.cloudinary.com/gonation/gonation.data.prod/default/img-itm-cover-full.png" &&
+              !filteredOutSections.includes(item.sectionName)
           )
           .map((item, idx) => {
             console.log("item: ", item, idx)
@@ -351,14 +360,16 @@ const IndexPage = () => {
         break
       case "list":
         console.log("here in both for some reasonfsdaf")
-        return paginatedItems(12, sortFormattedMenu()).map((pile, idx) => (
-          <Slide
-            key={`${pile}-${idx}`}
-            slideStyleType={"sideBySideView"}
-            showcaseType="list"
-            data={pile}
-          />
-        ))
+        return paginatedItems(12, sortFormattedMenu())
+          .filter(pile => !filteredOutSections.includes(pile.sectionName))
+          .map((pile, idx) => (
+            <Slide
+              key={`${pile}-${idx}`}
+              slideStyleType={"sideBySideView"}
+              showcaseType="list"
+              data={pile}
+            />
+          ))
         break
       case "both":
         console.log("here in both for some reason")
@@ -367,6 +378,8 @@ const IndexPage = () => {
         console.log("hey")
     }
   }
+
+  console.log("filtered out sections: ", filteredOutSections)
 
   const renderBoth = () => (
     <Carousel
@@ -417,6 +430,8 @@ const IndexPage = () => {
         listData={sectionData}
         displayType={displayType}
         setDisplayType={setDisplayType}
+        filteredOutSections={filteredOutSections}
+        setFilteredOutSections={setFilteredOutSections}
       />
       {displayType === "both" && !isLoading ? (
         renderBoth()
