@@ -20,6 +20,10 @@ const PoweredToolsSlide = props => {
     props.setIsListView(false)
   }
 
+  const handleDisplayType = type => {
+    props.setDisplayType(type)
+  }
+
   return (
     <div
       className={`powered-by-bar ${
@@ -139,8 +143,8 @@ const PoweredToolsSlide = props => {
                   <input
                     type="radio"
                     name="isList"
-                    onChange={handleDefaultView}
-                    checked={!props.isListView}
+                    onChange={() => handleDisplayType("default")}
+                    checked={props.displayType === "default"}
                   />
                   Display single items
                 </label>
@@ -148,8 +152,8 @@ const PoweredToolsSlide = props => {
                   <input
                     type="radio"
                     name="isList"
-                    onChange={handleListView}
-                    checked={props.isListView}
+                    onChange={() => handleDisplayType("list")}
+                    checked={props.displayType === "list"}
                   />
                   Display List
                 </label>
@@ -157,8 +161,8 @@ const PoweredToolsSlide = props => {
                   <input
                     type="radio"
                     name="isBoth"
-                    // onChange={handleListView}
-                    // checked={props.isListView}
+                    onChange={() => handleDisplayType("both")}
+                    checked={props.displayType === "both"}
                   />
                   Display Both
                 </label>

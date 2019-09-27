@@ -31,9 +31,10 @@ const IndexPage = () => {
   // !This is temporary: will be used in the form / transfered to state
 
   // form state
-  const [isListView, setIsListView] = useState(false)
+  // const [isListView, setIsListView] = useState(false)
+  const [displayType, setDisplayType] = useState("default")
 
-  const imgOnly = isListView ? false : true
+  const imgOnly = displayType === "list" ? false : true
 
   const [slideDuration, setSlideDuration] = useState(15000)
   const [activeTypes, setActiveTypes] = useState([
@@ -301,14 +302,14 @@ const IndexPage = () => {
     if (shoutData.hasOwnProperty("shout") && activeTypes.includes("shout")) {
       formatShoutData()
     }
-  }, [menuData, recurringData, eventData, shoutData, isListView])
+  }, [menuData, recurringData, eventData, shoutData, displayType])
 
   useEffect(() => {
     if (menuData.length && recurringData.length && eventData && shoutData) {
       setIsLoading(false)
     }
     if (!isLoading) {
-      if (!isListView) {
+      if (displayType !== "list") {
         setSlideData(
           shuffleArray(
             formattedMenu
@@ -321,11 +322,90 @@ const IndexPage = () => {
         )
       }
     }
-  }, [isLoading, menuData, recurringData, shoutData, isListView])
+  }, [isLoading, menuData, recurringData, shoutData, displayType])
 
   // console.log("PAGINATED ITEMS ARE: ", paginatedItems(8, formattedMenu))
 
   console.log("formattedMenu: ", formattedMenu, "slideData: ", slideData)
+
+  const handleRender = () => {
+    switch (displayType) {
+      case "default":
+        return slideData
+          .filter(
+            item =>
+              item.image !==
+              "https://res.cloudinary.com/gonation/gonation.data.prod/default/img-itm-cover-full.png"
+          )
+          .map((item, idx) => {
+            console.log("item: ", item, idx)
+            return (
+              <Slide
+                key={`${item}-${idx}`}
+                slideStyleType={"random"}
+                // showcaseType={"default"}
+                data={item}
+              />
+            )
+          })
+        break
+      case "list":
+        console.log("here in both for some reasonfsdaf")
+        return paginatedItems(12, sortFormattedMenu()).map((pile, idx) => (
+          <Slide
+            key={`${pile}-${idx}`}
+            slideStyleType={"sideBySideView"}
+            showcaseType="list"
+            data={pile}
+          />
+        ))
+        break
+      case "both":
+        console.log("here in both for some reason")
+
+      default:
+        console.log("hey")
+    }
+  }
+
+  const renderBoth = () => (
+    <Carousel
+      showThumbs={false}
+      useKeyboardArrows={true}
+      showArrows={false}
+      showStatus={false}
+      showIndicators={true}
+      transitionTime={1000}
+      autoPlay={true}
+      interval={slideDuration}
+    >
+      {slideData
+        .filter(
+          item =>
+            item.image !==
+            "https://res.cloudinary.com/gonation/gonation.data.prod/default/img-itm-cover-full.png"
+        )
+        .map((item, idx) => {
+          console.log("item: ", item, idx)
+          return (
+            <Slide
+              key={`${item}-${idx}`}
+              slideStyleType={"random"}
+              // showcaseType={"default"}
+              data={item}
+            />
+          )
+        })}
+      {paginatedItems(12, sortFormattedMenu()).map((pile, idx) => (
+        <Slide
+          key={`${pile}-${idx}`}
+          slideStyleType={"sideBySideView"}
+          showcaseType="list"
+          data={pile}
+        />
+      ))}
+    </Carousel>
+  )
 
   return (
     <Layout>
@@ -335,48 +415,25 @@ const IndexPage = () => {
         activeTypes={activeTypes}
         setActiveTypes={setActiveTypes}
         listData={sectionData}
-        isListView={isListView}
-        setIsListView={setIsListView}
+        displayType={displayType}
+        setDisplayType={setDisplayType}
       />
-      <Carousel
-        showThumbs={false}
-        useKeyboardArrows={true}
-        showArrows={false}
-        showStatus={false}
-        showIndicators={false}
-        transitionTime={1000}
-        autoPlay={true}
-        interval={slideDuration}
-      >
-        {!isLoading && isListView && sortFormattedMenu().length
-          ? paginatedItems(12, sortFormattedMenu()).map((pile, idx) => (
-              <Slide
-                key={`${pile}-${idx}`}
-                slideStyleType={"sideBySideView"}
-                showcaseType="list"
-                data={pile}
-              />
-            ))
-          : !isLoading &&
-            slideData.length > 0 &&
-            slideData
-              .filter(
-                item =>
-                  item.image !==
-                  "https://res.cloudinary.com/gonation/gonation.data.prod/default/img-itm-cover-full.png"
-              )
-              .map((item, idx) => {
-                console.log("item: ", item, idx)
-                return (
-                  <Slide
-                    key={`${item}-${idx}`}
-                    slideStyleType={"random"}
-                    // showcaseType={"default"}
-                    data={item}
-                  />
-                )
-              })}
-      </Carousel>
+      {displayType === "both" && !isLoading ? (
+        renderBoth()
+      ) : (
+        <Carousel
+          showThumbs={false}
+          useKeyboardArrows={true}
+          showArrows={false}
+          showStatus={false}
+          showIndicators={true}
+          transitionTime={1000}
+          autoPlay={true}
+          interval={slideDuration}
+        >
+          {!isLoading && handleRender()}
+        </Carousel>
+      )}
     </Layout>
   )
 }
