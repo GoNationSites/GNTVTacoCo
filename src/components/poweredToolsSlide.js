@@ -2,17 +2,15 @@ import React, { useState, useEffect } from "react"
 import poweredBy from "../images/poweredby.png"
 import { filter } from "minimatch"
 import SectionToggleCheckbox from "./sectionToggleCheckbox"
+import ActiveTypesForm from "./activeTypesForm"
 const PoweredToolsSlide = props => {
   const [currentDuration, setCurrentDuration] = useState(props.duration)
   const [showForm, setShowForm] = useState(false)
   const [filteredArr, setFilteredArr] = useState([])
+  const [dataType, setDataType] = useState(props.activeTypes)
   const handleDurationChange = event => {
     setCurrentDuration(event.target.value)
     props.setSlideDuration(event.target.value)
-  }
-
-  const handleContentTypeChange = event => {
-    // console.log(event.target.value)
   }
 
   const handleListView = () => {
@@ -37,11 +35,22 @@ const PoweredToolsSlide = props => {
     setFilteredArr(filteredArr)
     props.setFilteredOutSections(filteredArr)
   }
-  console.log("filteredArr is now: ")
+
+  const addDataTypes = dataName => {
+    setDataType([...dataType, dataName])
+    props.setActiveTypes(dataType)
+  }
+
+  const removeDataTypes = dataName => {
+    dataType.splice(dataType.indexOf(dataName), 1)
+    setDataType(dataType)
+    props.setActiveTypes(dataType)
+  }
 
   useEffect(() => {
     props.setFilteredOutSections(filteredArr)
-  }, [filteredArr])
+    props.setActiveTypes(dataType)
+  }, [filteredArr, dataType])
 
   return (
     <div
@@ -89,65 +98,10 @@ const PoweredToolsSlide = props => {
             </label>
           </div>
 
-          <div className="control flex-down">
-            <h4>Transition Types</h4>
-            <label className="radio">
-              <input type="radio" name="transition" />
-              Random
-            </label>
-            <label className="radio">
-              <input type="radio" name="transition" />
-              Slide
-            </label>
-            <label className="radio">
-              <input type="radio" name="transition" />
-              Fade
-            </label>
-          </div>
-
-          <div className="control flex-down">
-            <h4>Content Displayed</h4>
-            <label className="checkbox">
-              <input
-                type="checkbox"
-                name="contentType"
-                value="item"
-                checked={props.activeTypes.includes("item")}
-                onChange={handleContentTypeChange}
-              />
-              Menu Items
-            </label>
-            <label className="checkbox">
-              <input
-                type="checkbox"
-                name="contentType"
-                value="section"
-                checked={props.activeTypes.includes("section")}
-                onChange={handleContentTypeChange}
-              />
-              Menu Sections
-            </label>
-            <label className="checkbox">
-              <input
-                type="checkbox"
-                name="contentType"
-                value="event"
-                checked={props.activeTypes.includes("event")}
-                onChange={handleContentTypeChange}
-              />
-              Events
-            </label>
-            <label className="checkbox">
-              <input
-                type="checkbox"
-                name="contentType"
-                value="shout"
-                checked={props.activeTypes.includes("shout")}
-                onChange={handleContentTypeChange}
-              />
-              Shout
-            </label>
-          </div>
+          <ActiveTypesForm
+            addDataTypes={addDataTypes}
+            removeDataTypes={removeDataTypes}
+          />
 
           <div className="control full-width columns">
             <div className="column">

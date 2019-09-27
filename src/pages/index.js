@@ -37,12 +37,7 @@ const IndexPage = () => {
   const imgOnly = displayType === "list" ? false : true
 
   const [slideDuration, setSlideDuration] = useState(15000)
-  const [activeTypes, setActiveTypes] = useState([
-    "item",
-    "event",
-    "section",
-    "shout",
-  ])
+  const [activeTypes, setActiveTypes] = useState(["item", "event", "shout"])
 
   // This state array contains any sections the user wants filtered out of their TV
   const [filteredOutSections, setFilteredOutSections] = useState([])
@@ -310,7 +305,7 @@ const IndexPage = () => {
     if (shoutData.hasOwnProperty("shout") && activeTypes.includes("shout")) {
       formatShoutData()
     }
-  }, [menuData, recurringData, eventData, shoutData, displayType])
+  }, [menuData, recurringData, eventData, shoutData, displayType, activeTypes])
 
   useEffect(() => {
     if (menuData.length && recurringData.length && eventData && shoutData) {
@@ -330,7 +325,7 @@ const IndexPage = () => {
         )
       }
     }
-  }, [isLoading, menuData, recurringData, shoutData, displayType])
+  }, [isLoading, menuData, recurringData, shoutData, displayType, activeTypes])
 
   // console.log("PAGINATED ITEMS ARE: ", paginatedItems(8, formattedMenu))
 
@@ -344,7 +339,8 @@ const IndexPage = () => {
             item =>
               item.image !==
                 "https://res.cloudinary.com/gonation/gonation.data.prod/default/img-itm-cover-full.png" &&
-              !filteredOutSections.includes(item.sectionName)
+              !filteredOutSections.includes(item.sectionName) &&
+              activeTypes.includes(item.type)
           )
           .map((item, idx) => {
             console.log("item: ", item, idx)
@@ -396,7 +392,9 @@ const IndexPage = () => {
         .filter(
           item =>
             item.image !==
-            "https://res.cloudinary.com/gonation/gonation.data.prod/default/img-itm-cover-full.png"
+              "https://res.cloudinary.com/gonation/gonation.data.prod/default/img-itm-cover-full.png" &&
+            activeTypes.includes(item.type) &&
+            !filteredOutSections.includes(item.sectionName)
         )
         .map((item, idx) => {
           console.log("item: ", item, idx)
@@ -409,14 +407,16 @@ const IndexPage = () => {
             />
           )
         })}
-      {paginatedItems(12, sortFormattedMenu()).map((pile, idx) => (
-        <Slide
-          key={`${pile}-${idx}`}
-          slideStyleType={"sideBySideView"}
-          showcaseType="list"
-          data={pile}
-        />
-      ))}
+      {paginatedItems(12, sortFormattedMenu())
+        .filter(pile => !filteredOutSections.includes(pile.sectionName))
+        .map((pile, idx) => (
+          <Slide
+            key={`${pile}-${idx}`}
+            slideStyleType={"sideBySideView"}
+            showcaseType="list"
+            data={pile}
+          />
+        ))}
     </Carousel>
   )
 
