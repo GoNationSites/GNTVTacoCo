@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Component } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import Layout from "../components/layout"
 import axios from "axios-jsonp"
 import jsonAdapter from "axios-jsonp"
@@ -8,6 +8,7 @@ import { Carousel } from "react-responsive-carousel"
 import slugify from "../helpers/slugify"
 import shuffleArray from "../helpers/shuffleArray"
 import PoweredToolsSlide from "../components/poweredToolsSlide"
+import lastUpdateTime from "../helpers/lastUpdateCounter"
 
 const IndexPage = () => {
   const [menuData, setMenuData] = useState({})
@@ -16,6 +17,8 @@ const IndexPage = () => {
   const gonationID = process.env.GONATIONID
   const [formattedMenu, setFormattedMenu] = useState([])
   const [formattedRecurringEvents, setFormattedRecurringEvents] = useState([])
+  const [initialUpdateTime, setInitialUpdateTime] = useState("")
+  const [lastUpdateTime, setLastUpdateTime] = useState("")
 
   const [sectionData, setSectionData] = useState([])
   const [shoutData, setShoutData] = useState({})
@@ -27,6 +30,7 @@ const IndexPage = () => {
   const [isLoading, setIsLoading] = useState(true)
 
   const [formattedEventData, setFormattedEventData] = useState([])
+  const [count, setCount] = useState(0)
 
   // !This is temporary: will be used in the form / transfered to state
 
@@ -83,13 +87,42 @@ const IndexPage = () => {
     })
   }
 
+  const fetchInitialUpdateTime = id => {
+    axios({
+      url: `https://data.prod.gonation.com/profile/newLastPricelistUpdate?profile_id=${id}`,
+      adapter: jsonAdapter,
+    }).then(res => {
+      setInitialUpdateTime(res.data.pricelistLastUpdated)
+    })
+  }
+
+  // https://data.prod.gonation.com/profile/newLastPricelistUpdate?profile_id=bzn-yIswX35BSp2jPrhbNzPjjg
+
   // Make requests when page loads
   useEffect(() => {
     requestMenuData(gonationID)
     requestEventData(gonationID)
     requestRecurringEventData(gonationID)
     fetchShoutData(gonationID)
+    fetchInitialUpdateTime(gonationID)
+    const interval = setInterval(() => {
+      axios({
+        url: `https://data.prod.gonation.com/profile/newLastPricelistUpdate?profile_id=${gonationID}`,
+        adapter: jsonAdapter,
+      }).then(res => {
+        setLastUpdateTime(res.data.pricelistLastUpdated)
+      })
+    }, 10000)
+    return () => clearInterval(interval)
   }, [])
+
+  useEffect(() => {
+    if (lastUpdateTime !== initialUpdateTime) {
+      setTimeout(() => {
+        requestMenuData(gonationID)
+      }, 10000)
+    }
+  }, [lastUpdateTime, initialUpdateTime])
 
   // todo render ALL prices
   const getPrices = () => {}
@@ -347,7 +380,6 @@ const IndexPage = () => {
               activeTypes.includes(item.type)
           )
           .map((item, idx) => {
-            console.log("item: ", item, idx)
             return (
               <Slide
                 key={`${item}-${idx}`}
