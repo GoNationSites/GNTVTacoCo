@@ -117,10 +117,12 @@ const IndexPage = () => {
   }, [])
 
   useEffect(() => {
-    if (lastUpdateTime !== initialUpdateTime) {
-      setTimeout(() => {
-        requestMenuData(gonationID)
-      }, 10000)
+    if (
+      lastUpdateTime !== "" &&
+      initialUpdateTime !== "" &&
+      lastUpdateTime !== initialUpdateTime
+    ) {
+      requestMenuData(gonationID)
     }
   }, [lastUpdateTime, initialUpdateTime])
 
@@ -392,7 +394,7 @@ const IndexPage = () => {
         break
       case "list":
         console.log("here in both for some reasonfsdaf")
-        return paginatedItems(12, sortFormattedMenu())
+        return paginatedItems(8, sortFormattedMenu())
           .filter(pile => !filteredOutSections.includes(pile.sectionName))
           .map((pile, idx) => (
             <Slide
