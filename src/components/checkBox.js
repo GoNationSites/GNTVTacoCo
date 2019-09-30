@@ -6,7 +6,6 @@ const CheckBox = ({ name, value, addDataTypes, removeDataTypes }) => {
   const handleOnChange = value => {
     isChecked ? setIsChecked(false) : setIsChecked(true)
     if (!isChecked) {
-      console.log("should trigger remove", value)
       addDataTypes(value)
     } else {
       removeDataTypes(value)

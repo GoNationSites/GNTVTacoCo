@@ -224,9 +224,7 @@ const IndexPage = () => {
   const runMenu = () => {
     //Theres only 1 powered list id here unlike beef barl
     menuData.forEach(poweredList => {
-      // console.log("poweredList: ", poweredList)
       poweredList.inventory.forEach(element => {
-        // console.log("element in run menu: ", element)
         buildSection(element)
       })
     })
@@ -284,8 +282,6 @@ const IndexPage = () => {
   // This effect formats the data the way we need it for the slide component
 
   // const allData = sectionData
-
-  // console.log(formattedMenu)
   // const mapped = formattedMenu.map(function(el, i) {
   //   return { index: i, value: el.sectionName.toLowerCase() }
   // })
@@ -302,7 +298,6 @@ const IndexPage = () => {
 
   // handles pagination of list view.
   const paginatedItems = (perPage, items) => {
-    console.log("items indide paginated items array; ", items)
     const paginatedItemsArr = []
     let tmpArr = []
 
@@ -320,7 +315,6 @@ const IndexPage = () => {
           paginatedItemsArr.push(tmpArr)
         }
       })
-    console.log("paginated items array: ", paginatedItemsArr)
     return paginatedItemsArr
   }
 
@@ -362,10 +356,6 @@ const IndexPage = () => {
     }
   }, [isLoading, menuData, recurringData, shoutData, displayType, activeTypes])
 
-  // console.log("PAGINATED ITEMS ARE: ", paginatedItems(8, formattedMenu))
-
-  console.log("formattedMenu: ", formattedMenu, "slideData: ", slideData)
-
   useEffect(() => {
     handleRender()
   }, [activeTypes])
@@ -393,7 +383,6 @@ const IndexPage = () => {
           })
         break
       case "list":
-        console.log("here in both for some reasonfsdaf")
         return paginatedItems(8, sortFormattedMenu())
           .filter(pile => !filteredOutSections.includes(pile.sectionName))
           .map((pile, idx) => (
@@ -406,14 +395,10 @@ const IndexPage = () => {
           ))
         break
       case "both":
-        console.log("here in both for some reason")
 
       default:
-        console.log("hey")
     }
   }
-
-  console.log("filtered out sections: ", filteredOutSections)
 
   const renderBoth = () => (
     <Carousel
@@ -445,7 +430,6 @@ const IndexPage = () => {
             !filteredOutSections.includes(item.sectionName)
         )
         .map((item, idx) => {
-          console.log("item: ", item, idx)
           return (
             <Slide
               key={`${item}-${idx}`}

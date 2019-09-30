@@ -51,7 +51,6 @@ const ContentBlock = ({
   )
 
   const handleEventType = () => {
-    // console.log("eventType in handle is: ", eventType)
     if (eventType === "regular") {
       return (
         <EventCountdown
@@ -82,7 +81,6 @@ const ContentBlock = ({
         return handleEventType()
         break
       case "shout":
-        // console.log("%%%%%%%%%", description)
         return <ShoutBlock description={description} shoutedAt={shoutedAt} />
         break
       default:
