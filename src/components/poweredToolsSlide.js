@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react"
 import poweredBy from "../images/poweredby.png"
 import SectionToggleCheckbox from "./sectionToggleCheckbox"
+import ActiveTypesForm from "./activeTypesForm"
 const PoweredToolsSlide = props => {
   const [currentDuration, setCurrentDuration] = useState(props.duration)
   const [showForm, setShowForm] = useState(false)
   const [filteredArr, setFilteredArr] = useState([])
-  const [dataType, setDataType] = useState(props.activeTypes)
+  const [theArray, setTheArray] = useState(props.activeTypes)
+
   const handleDurationChange = event => {
     setCurrentDuration(event.target.value)
     props.setSlideDuration(event.target.value)
@@ -34,21 +36,18 @@ const PoweredToolsSlide = props => {
     props.setFilteredOutSections(filteredArr)
   }
 
-  const addDataTypes = dataName => {
-    setDataType([...dataType, dataName])
-    props.setActiveTypes(dataType)
+  const handleAdd = value => {
+    setTheArray([...theArray, value])
   }
 
-  const removeDataTypes = dataName => {
-    dataType.splice(dataType.indexOf(dataName), 1)
-    setDataType(dataType)
-    props.setActiveTypes(dataType)
+  const handleRemoval = value => {
+    setTheArray(theArray.filter(item => item !== value))
   }
 
   useEffect(() => {
     props.setFilteredOutSections(filteredArr)
-    props.setActiveTypes(dataType)
-  }, [filteredArr, dataType])
+    props.setActiveTypes(theArray)
+  }, [filteredArr, theArray])
 
   return (
     <div
@@ -137,6 +136,11 @@ const PoweredToolsSlide = props => {
                     </label>
                   </div>
                 </div>
+
+                <ActiveTypesForm
+                  handleAdd={handleAdd}
+                  handleRemoval={handleRemoval}
+                />
 
                 <div className="flex-down control column">
                   <h4>Choose your sections to display:</h4>

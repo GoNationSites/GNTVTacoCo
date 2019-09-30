@@ -1,25 +1,25 @@
 import React, { useState } from "react"
 import Checkbox from "./checkBox"
 
-const ActiveTypesForm = ({ addDataTypes, removeDataTypes }) => {
+const ActiveTypesForm = ({ handleAdd, handleRemoval }) => {
   return (
-    <div className="control flex-down">
+    <div className="column control flex-down">
       <h4>Content Displayed</h4>
       <Checkbox
-        addDataTypes={addDataTypes}
-        removeDataTypes={removeDataTypes}
+        handleAdd={handleAdd}
+        handleRemoval={handleRemoval}
         name={"contentType"}
         value={"item"}
       />
       <Checkbox
-        addDataTypes={addDataTypes}
-        removeDataTypes={removeDataTypes}
+        handleAdd={handleAdd}
+        handleRemoval={handleRemoval}
         name={"contentType"}
         value={"event"}
       />
       <Checkbox
-        addDataTypes={addDataTypes}
-        removeDataTypes={removeDataTypes}
+        handleAdd={handleAdd}
+        handleRemoval={handleRemoval}
         name={"contentType"}
         value={"shout"}
       />

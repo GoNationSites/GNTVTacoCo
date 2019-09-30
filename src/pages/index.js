@@ -357,7 +357,9 @@ const IndexPage = () => {
   }, [isLoading, menuData, recurringData, shoutData, displayType, activeTypes])
 
   useEffect(() => {
-    handleRender()
+    if (activeTypes) {
+      handleRender()
+    }
   }, [activeTypes])
 
   const handleRender = () => {

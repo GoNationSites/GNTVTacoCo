@@ -1,16 +1,20 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 
-const CheckBox = ({ name, value, addDataTypes, removeDataTypes }) => {
+const CheckBox = ({ name, value, handleAdd, handleRemoval }) => {
   const [isChecked, setIsChecked] = useState(true)
 
-  const handleOnChange = value => {
-    isChecked ? setIsChecked(false) : setIsChecked(true)
-    if (!isChecked) {
-      addDataTypes(value)
-    } else {
-      removeDataTypes(value)
-    }
+  const handleOnChange = () => {
+    setIsChecked(!isChecked)
   }
+
+  useEffect(() => {
+    if (isChecked) {
+      handleAdd(value)
+    }
+    if (!isChecked) {
+      handleRemoval(value)
+    }
+  }, [isChecked])
   return (
     <label className="checkbox">
       <input
@@ -18,7 +22,7 @@ const CheckBox = ({ name, value, addDataTypes, removeDataTypes }) => {
         name={name}
         value={value}
         checked={isChecked}
-        onChange={() => handleOnChange(value)}
+        onChange={() => handleOnChange()}
       />
       {value}
     </label>
