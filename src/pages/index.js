@@ -93,6 +93,7 @@ const IndexPage = () => {
       adapter: jsonAdapter,
     }).then(res => {
       setInitialUpdateTime(res.data.pricelistLastUpdated)
+      setLastUpdateTime(res.data.pricelistLastUpdated)
     })
   }
 
@@ -100,11 +101,12 @@ const IndexPage = () => {
 
   // Make requests when page loads
   useEffect(() => {
+    fetchInitialUpdateTime(gonationID)
+
     requestMenuData(gonationID)
     requestEventData(gonationID)
     requestRecurringEventData(gonationID)
     fetchShoutData(gonationID)
-    fetchInitialUpdateTime(gonationID)
     const interval = setInterval(() => {
       axios({
         url: `https://data.prod.gonation.com/profile/newLastPricelistUpdate?profile_id=${gonationID}`,
@@ -113,7 +115,8 @@ const IndexPage = () => {
         setLastUpdateTime(res.data.pricelistLastUpdated)
       })
     }, 10000)
-    return () => clearInterval(interval)
+
+    // return () => clearInterval(interval)
   }, [])
 
   useEffect(() => {
