@@ -145,5 +145,11 @@ p {
 
 .event-countdown-wrap {
     display: flex;
-    
+
+}
+
+.countdown-content {
+    display: inline-block;
+    background: rgba(0, 0, 0, 0.45);
+    padding: 2rem;
 }

@@ -55,38 +55,42 @@ const RecurringSlide = ({
 
   const renderHappeningNowView = () => (
     <div className={`${isSideBySide ? "column" : ""} countdown-wrapper`}>
-      <p>Happening every: {renderEventDays()}</p>
-      <h1 className="event-title">{title}</h1>
+      <div className="countdown-content">
+        <p>Happening every: {renderEventDays()}</p>
+        <h1 className="event-title">{title}</h1>
 
-      <h2>
-        Happening today at
-        <span className="evt-hour">
-          {convertTime(eventDays[daysOccuring[0]].start)}
-        </span>
-        to
-        <span className="evt-hour">
-          {convertTime(eventDays[daysOccuring[0]].end)}
-        </span>
-      </h2>
+        <h2>
+          Happening today at
+          <span className="evt-hour">
+            {convertTime(eventDays[daysOccuring[0]].start)}
+          </span>
+          to
+          <span className="evt-hour">
+            {convertTime(eventDays[daysOccuring[0]].end)}
+          </span>
+        </h2>
+      </div>
     </div>
   )
 
   const renderUpcomingView = () => (
     <div className={`${isSideBySide ? "column" : ""} countdown-wrapper`}>
-      <h3>Come in on...</h3>
-      <p>Happening every: {renderEventDays()}</p>
-      <h3>For</h3>
-      <h1 className="event-title">{title}</h1>
-      <h2>
-        Happening at
-        <span className="evt-hour">
-          {convertTime(eventDays[daysOccuring[0]].start)}
-        </span>
-        to
-        <span className="evt-hour">
-          {convertTime(eventDays[daysOccuring[0]].end)}
-        </span>
-      </h2>
+      <div className="countdown-content">
+        <h3>Come in on...</h3>
+        <p>Happening every: {renderEventDays()}</p>
+        <h3>For</h3>
+        <h1 className="event-title">{title}</h1>
+        <h2>
+          Happening at
+          <span className="evt-hour">
+            {convertTime(eventDays[daysOccuring[0]].start)}
+          </span>
+          to
+          <span className="evt-hour">
+            {convertTime(eventDays[daysOccuring[0]].end)}
+          </span>
+        </h2>
+      </div>
     </div>
   )
 

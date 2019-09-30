@@ -29,7 +29,7 @@ const FullImageBG = ({
     <div
       className={`full-background-slide ${
         isTypeCard ? "card-type" : ""
-      } ${getTextPositioning()}`}
+      } ${getTextPositioning()} ${type === "event" ? "darken-overlay" : ""}`}
       style={fullImageBackground}
     >
       <ContentBlock
