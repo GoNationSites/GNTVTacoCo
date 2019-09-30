@@ -9,6 +9,7 @@ const RecurringSlide = ({
   description,
   image,
   eventDays,
+  isSideBySide,
   //   textPositioning,
   //   isTypeCard,
 }) => {
@@ -55,7 +56,7 @@ const RecurringSlide = ({
   }
 
   const renderHappeningNowView = () => (
-    <div className={`countdown-wrapper`}>
+    <div className={`${isSideBySide ? "column" : ""} countdown-wrapper`}>
       <p>Happening every: {renderEventDays()}</p>
       <h1 className="event-title">{title}</h1>
 
@@ -73,7 +74,7 @@ const RecurringSlide = ({
   )
 
   const renderUpcomingView = () => (
-    <div className={`countdown-wrapper`}>
+    <div className={`${isSideBySide ? "column" : ""} countdown-wrapper`}>
       <h3>Come in on...</h3>
       <p>Happening every: {renderEventDays()}</p>
       <h3>For</h3>

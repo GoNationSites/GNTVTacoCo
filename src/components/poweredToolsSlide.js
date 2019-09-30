@@ -42,12 +42,16 @@ const PoweredToolsSlide = props => {
   }
 
   const removeDataTypes = dataName => {
+    console.log("removing", dataName)
+    console.log(dataType.splice(dataType.indexOf(dataName), 1))
     dataType.splice(dataType.indexOf(dataName), 1)
+    console.log("setting data type to: ", dataType)
     setDataType(dataType)
     props.setActiveTypes(dataType)
   }
 
   useEffect(() => {
+    alert("jfiea")
     props.setFilteredOutSections(filteredArr)
     props.setActiveTypes(dataType)
   }, [filteredArr, dataType])

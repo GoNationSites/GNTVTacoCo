@@ -331,6 +331,10 @@ const IndexPage = () => {
 
   console.log("formattedMenu: ", formattedMenu, "slideData: ", slideData)
 
+  useEffect(() => {
+    handleRender()
+  }, [activeTypes])
+
   const handleRender = () => {
     switch (displayType) {
       case "default":
@@ -443,7 +447,7 @@ const IndexPage = () => {
           showStatus={false}
           showIndicators={true}
           transitionTime={1000}
-          autoPlay={true}
+          autoPlay={false}
           interval={slideDuration}
         >
           {!isLoading && handleRender()}

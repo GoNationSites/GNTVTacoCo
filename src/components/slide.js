@@ -133,6 +133,7 @@ const Slide = ({ data, showcaseType, slideStyleType }) => {
               textPositioning="right"
               isTypeCard={false}
               shoutedAt={data.shoutedAt ? data.shoutedAt : ""}
+              eventType={data.eventType}
             />
           )
         case "sectionShowcase":

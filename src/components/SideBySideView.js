@@ -11,6 +11,8 @@ const SideBySideView = ({
   isTypeCard,
   shoutedAt,
   type,
+  eventType,
+  eventDays,
 }) => {
   const background = {
     background: `url(${wood})`,
@@ -39,6 +41,8 @@ const SideBySideView = ({
         isSideBySide
         shoutedAt={shoutedAt}
         type={type}
+        eventType={eventType}
+        eventDays={eventDays}
       ></ContentBlock>
     </div>
   )
