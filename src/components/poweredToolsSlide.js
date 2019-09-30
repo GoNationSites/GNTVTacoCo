@@ -102,11 +102,6 @@ const PoweredToolsSlide = props => {
             </label>
           </div>
 
-          <ActiveTypesForm
-            addDataTypes={addDataTypes}
-            removeDataTypes={removeDataTypes}
-          />
-
           <div className="control full-width columns">
             <div className="column">
               <h4>TV Display Type: </h4>
