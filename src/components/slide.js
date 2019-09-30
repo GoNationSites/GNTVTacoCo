@@ -96,7 +96,7 @@ const Slide = ({ data, showcaseType, slideStyleType }) => {
               title={data.name}
               description={data.description}
               price={data.price ? data.price : ""}
-              image={optimizeImage(data.image, 200)}
+              image={optimizeImage(data.image, 2000)}
               eventDays={data.days ? data.days : ""}
               starts={data.starts}
               ends={data.ends}
@@ -112,7 +112,7 @@ const Slide = ({ data, showcaseType, slideStyleType }) => {
               title={data.name}
               description={data.description}
               price={data.price ? data.price : ""}
-              image={optimizeImage(data.image, 200)}
+              image={optimizeImage(data.image, 2000)}
               eventDays={data.days ? data.days : ""}
               starts={data.starts}
               ends={data.ends}

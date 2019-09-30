@@ -16,7 +16,7 @@ const FullImageBG = ({
   shoutedAt,
 }) => {
   const fullImageBackground = {
-    background: `url(${optimizeImage(image, 100)}) center center / cover`,
+    background: `url(${optimizeImage(image, 2000)}) center center / cover`,
     height: "100vh",
     width: "100%",
   }
