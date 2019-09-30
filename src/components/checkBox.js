@@ -9,7 +9,6 @@ const CheckBox = ({ name, value, addDataTypes, removeDataTypes }) => {
       console.log("should trigger remove", value)
       addDataTypes(value)
     } else {
-      alert("ye")
       removeDataTypes(value)
     }
   }
