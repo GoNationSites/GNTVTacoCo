@@ -69,6 +69,7 @@
 .sections-checkbox-wrap {
     display: flex;
     flex-wrap: wrap;
+    justify-content: flex-start;
     .checkbox {
         display: inline-block;
         padding: .3rem .1rem;
@@ -78,4 +79,12 @@
 
 .powered-tools-form-wrap h1 {
     margin-bottom: 2rem;
+}
+
+.checkbox, .radio {
+    font-size: 1.1rem;
+}
+
+.checkbox input, .radio input {
+    margin-right: 5px;
 }

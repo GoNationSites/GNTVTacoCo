@@ -3,7 +3,7 @@ import Checkbox from "./checkBox"
 
 const ActiveTypesForm = ({ handleAdd, handleRemoval }) => {
   return (
-    <div className="column control flex-down">
+    <div className="column is-2 control flex-down">
       <h4>Content Displayed</h4>
       <Checkbox
         handleAdd={handleAdd}

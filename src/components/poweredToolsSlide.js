@@ -97,6 +97,11 @@ const PoweredToolsSlide = props => {
               </label>
             </div>
 
+            <ActiveTypesForm
+              handleAdd={handleAdd}
+              handleRemoval={handleRemoval}
+            />
+
             <div className="column control full-width">
               <div className=" columns">
                 <div className="column is-5">
@@ -106,7 +111,7 @@ const PoweredToolsSlide = props => {
                     images. List type displays all of your items you have to
                     offer.
                   </p>
-                  <div className="select">
+                  <div className="select flex-down">
                     <label className="radio">
                       <input
                         type="radio"
@@ -136,11 +141,6 @@ const PoweredToolsSlide = props => {
                     </label>
                   </div>
                 </div>
-
-                <ActiveTypesForm
-                  handleAdd={handleAdd}
-                  handleRemoval={handleRemoval}
-                />
 
                 <div className="flex-down control column">
                   <h4>Choose your sections to display:</h4>
