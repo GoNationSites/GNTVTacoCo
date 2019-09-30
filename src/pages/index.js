@@ -132,31 +132,31 @@ const IndexPage = () => {
     if (element.inventory) {
       element.inventory.forEach(item => {
         if (!item.section) {
-          if (item.item.photo_id !== null || !imgOnly) {
-            formattedMenuDataArr.push({
-              type: "item",
-              name: item.item.name,
-              description: item.item.desc,
-              sectionName: element.section.name,
-              image: item.item.imageUrl,
-              price: item.item.variants.length > 0 ? item.item.variants : "",
-            })
-          }
+          // if (item.item.photo_id !== null || !imgOnly) {
+          formattedMenuDataArr.push({
+            type: "item",
+            name: item.item.name,
+            description: item.item.desc,
+            sectionName: element.section.name,
+            image: item.item.imageUrl,
+            price: item.item.variants.length > 0 ? item.item.variants : "",
+          })
+          // }
         } else {
           buildSection(item)
         }
       })
     } else {
-      if (element.item.photo_id !== null || !imgOnly) {
-        formattedMenuDataArr.push({
-          type: "item",
-          name: element.item.name,
-          description: element.item.desc,
-          sectionName: element.section ? element.section.name : "",
-          image: element.item.imageUrl,
-          price: element.item.variants.length > 0 ? element.item.variants : "",
-        })
-      }
+      // if (element.item.photo_id !== null || !imgOnly) {
+      formattedMenuDataArr.push({
+        type: "item",
+        name: element.item.name,
+        description: element.item.desc,
+        sectionName: element.section ? element.section.name : "",
+        image: element.item.imageUrl,
+        price: element.item.variants.length > 0 ? element.item.variants : "",
+      })
+      // }
     }
   }
 
@@ -424,6 +424,16 @@ const IndexPage = () => {
       autoPlay={true}
       interval={slideDuration}
     >
+      {paginatedItems(12, sortFormattedMenu())
+        .filter(pile => !filteredOutSections.includes(pile.sectionName))
+        .map((pile, idx) => (
+          <Slide
+            key={`${pile}-${idx}`}
+            slideStyleType={"sideBySideView"}
+            showcaseType="list"
+            data={pile}
+          />
+        ))}
       {slideData
         .filter(
           item =>
@@ -443,16 +453,6 @@ const IndexPage = () => {
             />
           )
         })}
-      {paginatedItems(12, sortFormattedMenu())
-        .filter(pile => !filteredOutSections.includes(pile.sectionName))
-        .map((pile, idx) => (
-          <Slide
-            key={`${pile}-${idx}`}
-            slideStyleType={"sideBySideView"}
-            showcaseType="list"
-            data={pile}
-          />
-        ))}
     </Carousel>
   )
 
