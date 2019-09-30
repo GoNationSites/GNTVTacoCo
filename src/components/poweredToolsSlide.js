@@ -69,7 +69,7 @@ const PoweredToolsSlide = props => {
           <h1 className="has-text-centered">GoNation TV Powered Settings</h1>
 
           <div className="columns is-centered form-col-container">
-            <div className="column control flex-down">
+            <div className="column is-2 control flex-down">
               <h4>Slide Duration (Seconds)</h4>
               <label className="radio">
                 <input
@@ -103,58 +103,62 @@ const PoweredToolsSlide = props => {
               </label>
             </div>
 
-            <div className="column control full-width columns">
-              <div className="column">
-                <h4>TV Display Type: </h4>
-                <p>
-                  Shuffle, Side by side, and Full Screen are a great way to
-                  showcase your food/items/events with images. List View will
-                  show your customers everything you have to offer.
-                </p>
-                <div className="select">
-                  <label className="radio">
-                    <input
-                      type="radio"
-                      name="isList"
-                      onChange={() => handleDisplayType("default")}
-                      checked={props.displayType === "default"}
-                    />
-                    Display single items
-                  </label>
-                  <label className="radio">
-                    <input
-                      type="radio"
-                      name="isList"
-                      onChange={() => handleDisplayType("list")}
-                      checked={props.displayType === "list"}
-                    />
-                    Display List
-                  </label>
-                  <label className="radio">
-                    <input
-                      type="radio"
-                      name="isBoth"
-                      onChange={() => handleDisplayType("both")}
-                      checked={props.displayType === "both"}
-                    />
-                    Display Both
-                  </label>
-                </div>
-                <div className="flex-down control">
-                  <h4>Choose your sections to diplay:</h4>
-                  {props.listData.map((section, idx) => {
-                    console.log("props are: ", props)
-                    return (
-                      <SectionToggleCheckbox
-                        section={section}
-                        idx={idx}
-                        setFilteredArr={setFilteredArr}
-                        addSectionToTV={addSectionToTV}
-                        removeSectionFromTV={removeSectionFromTV}
-                        // handleSectionSelection={handleSectionSelection}
+            <div className="column control full-width">
+              <div className=" columns">
+                <div className="column is-5">
+                  <h4>TV Display Type: </h4>
+                  <p>
+                    Single items showcase a single item/event/shout with large
+                    images. List type displays all of your items you have to
+                    offer.
+                  </p>
+                  <div className="select">
+                    <label className="radio">
+                      <input
+                        type="radio"
+                        name="isList"
+                        onChange={() => handleDisplayType("default")}
+                        checked={props.displayType === "default"}
                       />
-                    )
-                  })}
+                      Display single items
+                    </label>
+                    <label className="radio">
+                      <input
+                        type="radio"
+                        name="isList"
+                        onChange={() => handleDisplayType("list")}
+                        checked={props.displayType === "list"}
+                      />
+                      Display List
+                    </label>
+                    <label className="radio">
+                      <input
+                        type="radio"
+                        name="isBoth"
+                        onChange={() => handleDisplayType("both")}
+                        checked={props.displayType === "both"}
+                      />
+                      Display Both
+                    </label>
+                  </div>
+                </div>
+
+                <div className="flex-down control column">
+                  <h4>Choose your sections to display:</h4>
+                  <div className="sections-checkbox-wrap">
+                    {props.listData.map((section, idx) => {
+                      return (
+                        <SectionToggleCheckbox
+                          section={section}
+                          idx={idx}
+                          setFilteredArr={setFilteredArr}
+                          addSectionToTV={addSectionToTV}
+                          removeSectionFromTV={removeSectionFromTV}
+                          // handleSectionSelection={handleSectionSelection}
+                        />
+                      )
+                    })}
+                  </div>
                 </div>
               </div>
             </div>

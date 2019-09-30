@@ -65,3 +65,13 @@
 .form-col-container {
     width: 100%;
 }
+
+.sections-checkbox-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    .checkbox {
+        display: inline-block;
+        padding: .3rem .1rem;
+        margin: 0 10px;
+    }
+}
