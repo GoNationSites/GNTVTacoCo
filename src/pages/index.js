@@ -41,7 +41,7 @@ const IndexPage = () => {
   const imgOnly = displayType === "list" ? false : true
 
   const [slideDuration, setSlideDuration] = useState(15000)
-  const [activeTypes, setActiveTypes] = useState(["event", "shout"])
+  const [activeTypes, setActiveTypes] = useState(["item", "event", "shout"])
 
   // This state array contains any sections the user wants filtered out of their TV
   const [filteredOutSections, setFilteredOutSections] = useState([])
@@ -406,7 +406,7 @@ const IndexPage = () => {
       useKeyboardArrows={true}
       showArrows={false}
       showStatus={false}
-      showIndicators={true}
+      showIndicators={false}
       transitionTime={1000}
       autoPlay={true}
       interval={slideDuration}
@@ -463,7 +463,7 @@ const IndexPage = () => {
           useKeyboardArrows={true}
           showArrows={false}
           showStatus={false}
-          showIndicators={true}
+          showIndicators={false}
           transitionTime={1000}
           autoPlay={false}
           interval={slideDuration}
