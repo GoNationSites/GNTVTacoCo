@@ -13,6 +13,8 @@ const SideBySideView = ({
   type,
   eventType,
   eventDays,
+  starts,
+  ends,
 }) => {
   const background = {
     background: `url(${wood})`,
@@ -43,6 +45,8 @@ const SideBySideView = ({
         type={type}
         eventType={eventType}
         eventDays={eventDays}
+        starts={starts}
+        ends={ends}
       ></ContentBlock>
     </div>
   )

@@ -37,7 +37,7 @@ const EventCountdown = ({ title, description, image, starts, ends }) => {
     }
   }
   return (
-    <div className="event-countdown-wrap">
+    <div className="column event-countdown-wrap is-vcentered">
       <div>
         <h1 className="event-title">{title}</h1>
         <p>

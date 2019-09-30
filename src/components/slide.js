@@ -130,6 +130,8 @@ const Slide = ({ data, showcaseType, slideStyleType }) => {
               price={data.price ? data.price : ""}
               image={optimizeImage(data.image, 200)}
               eventDays={data.days ? data.days : ""}
+              starts={data.starts}
+              ends={data.ends}
               textPositioning="right"
               isTypeCard={false}
               shoutedAt={data.shoutedAt ? data.shoutedAt : ""}
