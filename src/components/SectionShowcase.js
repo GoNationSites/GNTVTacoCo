@@ -1,5 +1,4 @@
 import React from "react"
-import ContentBlock from "./contentBlock"
 import wood from "../images/wood.jpg"
 import optimizeImage from "../helpers/cloudinaryOptimization"
 import shuffleArray from "../helpers/shuffleArray"

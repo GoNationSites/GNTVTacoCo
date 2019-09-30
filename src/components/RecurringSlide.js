@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react"
 import dayjs from "dayjs"
 import convertTime from "../helpers/convertTime"
-import Countdown from "react-countdown-now"
 const RecurringSlide = ({
   //   type,
   title,

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react"
 import poweredBy from "../images/poweredby.png"
-import { filter } from "minimatch"
 import SectionToggleCheckbox from "./sectionToggleCheckbox"
-import ActiveTypesForm from "./activeTypesForm"
 const PoweredToolsSlide = props => {
   const [currentDuration, setCurrentDuration] = useState(props.duration)
   const [showForm, setShowForm] = useState(false)

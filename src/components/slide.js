@@ -2,11 +2,7 @@ import React, { useState, useEffect } from "react"
 import SideBySideView from "./SideBySideView"
 import FullImageBG from "./fullImageBg"
 import SectionShowcase from "./SectionShowcase"
-import RecurringSlide from "./RecurringSlide.js"
 import optimizeImage from "../helpers/cloudinaryOptimization"
-import wood from "../images/wood.jpg"
-import convertTime from "../helpers/convertTime"
-import EventCountdown from "./eventCountdown"
 import FullListView from "./fullListView"
 
 // data: data object
