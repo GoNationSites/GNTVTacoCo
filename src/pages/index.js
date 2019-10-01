@@ -414,7 +414,7 @@ const IndexPage = () => {
       showIndicators={false}
       transitionTime={1000}
       autoPlay={true}
-      interval={slideDuration}
+      duration={slideDuration}
     >
       {paginatedItems(12, sortFormattedMenu())
         .filter(pile => !filteredOutSections.includes(pile.sectionName))
