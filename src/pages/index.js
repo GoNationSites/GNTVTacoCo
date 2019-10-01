@@ -469,8 +469,8 @@ const IndexPage = () => {
           showArrows={false}
           showStatus={false}
           showIndicators={false}
-          transitionTime={1000}
-          autoPlay={false}
+          transitionTime={500}
+          autoPlay={true}
           interval={slideDuration}
         >
           {!isLoading && handleRender()}
