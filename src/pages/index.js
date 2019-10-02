@@ -417,6 +417,7 @@ const IndexPage = () => {
       stopOnHover={false}
       infiniteLoop
       swipeable={true}
+      emulateTouch={true}
     >
       {paginatedItems(12, sortFormattedMenu())
         .filter(pile => !filteredOutSections.includes(pile.sectionName))
@@ -476,6 +477,7 @@ const IndexPage = () => {
           stopOnHover={false}
           infiniteLoop
           autoPlay={true}
+          emulateTouch={true}
         >
           {!isLoading && handleRender()}
         </Carousel>
