@@ -413,10 +413,10 @@ const IndexPage = () => {
       showStatus={false}
       showIndicators={false}
       transitionTime={1000}
-      autoPlay
       duration={slideDuration}
       stopOnHover={false}
       infiniteLoop
+      swipeable={true}
     >
       {paginatedItems(12, sortFormattedMenu())
         .filter(pile => !filteredOutSections.includes(pile.sectionName))
@@ -472,10 +472,10 @@ const IndexPage = () => {
           showStatus={false}
           showIndicators={false}
           transitionTime={500}
-          autoPlay
           interval={slideDuration}
           stopOnHover={false}
           infiniteLoop
+          autoPlay={true}
         >
           {!isLoading && handleRender()}
         </Carousel>
