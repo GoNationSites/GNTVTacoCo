@@ -70,6 +70,16 @@ const PoweredToolsSlide = props => {
                   type="radio"
                   name="duration"
                   onChange={handleDurationChange}
+                  value={5000}
+                  checked={props.duration == 5000}
+                />
+                5
+              </label>
+              <label className="radio">
+                <input
+                  type="radio"
+                  name="duration"
+                  onChange={handleDurationChange}
                   value={10000}
                   checked={props.duration == 10000}
                 />
