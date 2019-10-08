@@ -9,6 +9,8 @@ const RecurringSlide = ({
   image,
   eventDays,
   isSideBySide,
+  starts,
+  ends,
   //   textPositioning,
   //   isTypeCard,
 }) => {
@@ -17,6 +19,8 @@ const RecurringSlide = ({
   const [eventType, setEventType] = useState(
     eventDays ? "recurring" : "regular"
   )
+
+  console.log("starts is: ", starts, "ends is: ", ends)
 
   const checkIfEventIsOnCurrentDay = () => {
     const currentDay = dayjs()
@@ -52,25 +56,23 @@ const RecurringSlide = ({
     }
   }
 
-  const renderHappeningNowView = () => (
-    <div className={`${isSideBySide ? "column" : ""} countdown-wrapper`}>
-      <div className="countdown-content">
-        <p>Happening every: {renderEventDays()}</p>
-        <h1 className="event-title">{title}</h1>
+  const renderHappeningNowView = () => {
+    return (
+      <div className={`${isSideBySide ? "column" : ""} countdown-wrapper`}>
+        <div className="countdown-content">
+          <p>Happening every: {renderEventDays()}</p>
+          <h1 className="event-title">{title}</h1>
 
-        <h2>
-          Happening today at
-          <span className="evt-hour">
-            {convertTime(eventDays[daysOccuring[0]].start)}
-          </span>
-          to
-          <span className="evt-hour">
-            {convertTime(eventDays[daysOccuring[0]].end)}
-          </span>
-        </h2>
+          <h2>
+            Happening today at
+            <span className="evt-hour">{dayjs(starts).format("h:mm A")}</span>
+            to
+            <span className="evt-hour">{dayjs(ends).format("h:mm A")}</span>
+          </h2>
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 
   const renderUpcomingView = () => (
     <div className={`${isSideBySide ? "column" : ""} countdown-wrapper`}>
@@ -82,11 +84,11 @@ const RecurringSlide = ({
         <h2>
           Happening at
           <span className="evt-hour">
-            {convertTime(eventDays[daysOccuring[0]].start)}
+            <span className="evt-hour">{dayjs(starts).format("h:mm A")}</span>
           </span>
           to
           <span className="evt-hour">
-            {convertTime(eventDays[daysOccuring[0]].end)}
+            <span className="evt-hour">{dayjs(ends).format("h:mm A")}</span>
           </span>
         </h2>
       </div>

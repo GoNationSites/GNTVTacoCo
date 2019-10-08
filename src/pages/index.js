@@ -248,6 +248,8 @@ const IndexPage = () => {
         image: event.imageurl,
         days: event.eventDays,
         tags: event.eventTags,
+        starts: event.starts,
+        ends: event.ends,
       })
     })
     setFormattedRecurringEvents(eventArr)

@@ -70,6 +70,8 @@ const ContentBlock = ({
           image={image}
           eventDays={eventDays}
           isSideBySide={isSideBySide}
+          starts={starts}
+          ends={ends}
         />
       )
     }
