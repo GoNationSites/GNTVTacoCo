@@ -465,7 +465,7 @@ const IndexPage = () => {
       />
       {displayType === "both" && !isLoading ? (
         renderBoth()
-      ) : (
+      ) : slideData.length > 1 ? (
         <Carousel
           showThumbs={false}
           useKeyboardArrows={true}
@@ -481,6 +481,8 @@ const IndexPage = () => {
         >
           {!isLoading && handleRender()}
         </Carousel>
+      ) : (
+        ""
       )}
     </Layout>
   )
