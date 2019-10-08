@@ -302,24 +302,37 @@ const IndexPage = () => {
     })
 
   // handles pagination of list view.
+  // @params perPage = amount of items per page
+  // @params items = all items  * ideally sorted *
   const paginatedItems = (perPage, items) => {
     const paginatedItemsArr = []
     let tmpArr = []
+    // I need to loop through items...
+    // Let's say a slide can take up to 8 items
+
+    // DO THIS I go through each item. pushing them to tmpArr. if tmpArr % perPage === 0 then we must start a new page.
+
+    // also i check what the previous item section name is, if it matches, we can push it directly into
 
     items
       .filter(item => !filteredOutSections.includes(item.sectionName))
       .forEach((itm, idx) => {
-        if ((idx + 1) % perPage === 0) {
+        if (idx === 0) {
           tmpArr.push(itm)
-          paginatedItemsArr.push(tmpArr)
-          tmpArr = []
         } else {
-          tmpArr.push(itm)
-        }
-        if (tmpArr.length && idx === items.length - 1) {
-          paginatedItemsArr.push(tmpArr)
+          console.log("tmpArr 1", tmpArr, idx)
+          if (items[idx - 1].sectionName === itm.sectionName) {
+            tmpArr.push(itm)
+          } else {
+            paginatedItemsArr.push(tmpArr)
+            console.log("tmpArr 2", tmpArr, idx)
+            tmpArr = []
+            tmpArr.push(itm)
+          }
         }
       })
+
+    console.log("paginatedItemsArr is: ", paginatedItemsArr)
     return paginatedItemsArr
   }
 

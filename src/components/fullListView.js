@@ -31,13 +31,14 @@ const FullListView = props => {
               </div>
               <div className="list-item-content">
                 <h3>
-                  <span className="list-item-section">{item.sectionName}</span>{" "}
-                  <span className="list-item-name">{item.name}</span>
+                  <span className="list-item-section">{item.sectionName} </span>{" "}
+                  <span className="list-item-name">
+                    {item.name}{" "}
+                    {item.price.length ? `$ ${item.price[0].price}` : ""}
+                  </span>
                 </h3>
                 <p className="list-item-description">{item.description}</p>
-                <p className="list-item-price">
-                  {item.price.length ? `$ ${item.price[0].price}` : ""}
-                </p>
+                <p className="list-item-price"></p>
               </div>
             </div>
           ))}
