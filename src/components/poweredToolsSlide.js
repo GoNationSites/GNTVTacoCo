@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import poweredBy from "../images/poweredby.png"
 import SectionToggleCheckbox from "./sectionToggleCheckbox"
 import ActiveTypesForm from "./activeTypesForm"
-import RefreshIcon from "../../public/refresh.svg"
+import RefreshIcon from "../images/refresh.svg"
 const PoweredToolsSlide = props => {
   const [currentDuration, setCurrentDuration] = useState(props.duration)
   const [showForm, setShowForm] = useState(false)
