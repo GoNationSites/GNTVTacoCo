@@ -176,6 +176,24 @@ const PoweredToolsSlide = props => {
                     })}
                   </div>
                 </div>
+
+                <div className="flex-down control column">
+                  <h4>Choose the event you would like to hold on:</h4>
+                  <div className="sections-checkbox-wrap">
+                    {props.listData.map((section, idx) => {
+                      return (
+                        <SectionToggleCheckbox
+                          section={section}
+                          idx={idx}
+                          setFilteredArr={setFilteredArr}
+                          addSectionToTV={addSectionToTV}
+                          removeSectionFromTV={removeSectionFromTV}
+                          // handleSectionSelection={handleSectionSelection}
+                        />
+                      )
+                    })}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
