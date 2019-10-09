@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import poweredBy from "../images/poweredby.png"
 import SectionToggleCheckbox from "./sectionToggleCheckbox"
 import ActiveTypesForm from "./activeTypesForm"
+import RefreshIcon from "../../public/refresh.svg"
 const PoweredToolsSlide = props => {
   const [currentDuration, setCurrentDuration] = useState(props.duration)
   const [showForm, setShowForm] = useState(false)
@@ -59,6 +60,12 @@ const PoweredToolsSlide = props => {
         <img src={poweredBy}></img>
       </p>
       <div className={`powered-tools-form-wrap ${showForm ? "" : "is-hidden"}`}>
+        <div
+          className="refresh-container"
+          onClick={() => window.location.reload()}
+        >
+          <img src={RefreshIcon} alt="refresh"></img>
+        </div>
         <form className="powered-tools-form">
           <h1 className="has-text-centered">GoNation TV Powered Settings</h1>
 

@@ -88,3 +88,13 @@
 .checkbox input, .radio input {
     margin-right: 5px;
 }
+
+.refresh-container {
+    position: absolute; 
+    bottom: 15px;
+    right: 15px;
+    cursor: pointer;
+    img {
+        width: 20px;
+    }
+}
