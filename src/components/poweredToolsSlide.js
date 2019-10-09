@@ -3,12 +3,13 @@ import poweredBy from "../images/poweredby.png"
 import SectionToggleCheckbox from "./sectionToggleCheckbox"
 import ActiveTypesForm from "./activeTypesForm"
 import RefreshIcon from "../images/refresh.svg"
+import EventRadio from "./eventRadio"
 const PoweredToolsSlide = props => {
   const [currentDuration, setCurrentDuration] = useState(props.duration)
   const [showForm, setShowForm] = useState(false)
   const [filteredArr, setFilteredArr] = useState([])
   const [theArray, setTheArray] = useState(props.activeTypes)
-
+  const [toggleSingleEventsView, setToggleSingleEventsView] = useState(false)
   const handleDurationChange = event => {
     setCurrentDuration(event.target.value)
     props.setSlideDuration(event.target.value)
@@ -176,24 +177,33 @@ const PoweredToolsSlide = props => {
                     })}
                   </div>
                 </div>
-
-                <div className="flex-down control column">
-                  <h4>Choose the event you would like to hold on:</h4>
-                  <div className="sections-checkbox-wrap">
-                    {props.listData.map((section, idx) => {
+              </div>
+              <div className="flex-down control column evt-toggle">
+                <label>
+                  Show just 1 event?
+                  <input
+                    type="checkbox"
+                    onChange={() =>
+                      setToggleSingleEventsView(!toggleSingleEventsView)
+                    }
+                  ></input>
+                </label>
+                {toggleSingleEventsView ? (
+                  <div className="">
+                    <p>Select the event you'd like to only display</p>
+                    {props.eventTypes.map((event, idx) => {
                       return (
-                        <SectionToggleCheckbox
-                          section={section}
-                          idx={idx}
-                          setFilteredArr={setFilteredArr}
-                          addSectionToTV={addSectionToTV}
-                          removeSectionFromTV={removeSectionFromTV}
+                        <EventRadio
+                          event={event}
+
                           // handleSectionSelection={handleSectionSelection}
                         />
                       )
                     })}
                   </div>
-                </div>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           </div>

@@ -98,3 +98,14 @@
         width: 20px;
     }
 }
+
+.evt-toggle  {
+    label {
+        display: flex;
+        align-items: center;
+    }
+    input {
+        margin-left: 10px;
+    }
+    
+}

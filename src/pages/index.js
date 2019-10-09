@@ -320,19 +320,15 @@ const IndexPage = () => {
         if (idx === 0) {
           tmpArr.push(itm)
         } else {
-          console.log("tmpArr 1", tmpArr, idx)
           if (items[idx - 1].sectionName === itm.sectionName) {
             tmpArr.push(itm)
           } else {
             paginatedItemsArr.push(tmpArr)
-            console.log("tmpArr 2", tmpArr, idx)
             tmpArr = []
             tmpArr.push(itm)
           }
         }
       })
-
-    console.log("paginatedItemsArr is: ", paginatedItemsArr)
     return paginatedItemsArr
   }
 
@@ -465,6 +461,8 @@ const IndexPage = () => {
     </Carousel>
   )
 
+  const getEventTypes = () => slideData.filter(item => item.type === "event")
+
   return (
     <Layout>
       <PoweredToolsSlide
@@ -477,6 +475,7 @@ const IndexPage = () => {
         setDisplayType={setDisplayType}
         filteredOutSections={filteredOutSections}
         setFilteredOutSections={setFilteredOutSections}
+        eventTypes={getEventTypes()}
       />
       {displayType === "both" && !isLoading ? (
         renderBoth()
