@@ -77,9 +77,7 @@ const RecurringSlide = ({
   const renderUpcomingView = () => (
     <div className={`${isSideBySide ? "column" : ""} countdown-wrapper`}>
       <div className="countdown-content">
-        <h3>Come in on...</h3>
         <p>Happening every: {renderEventDays()}</p>
-        <h3>For</h3>
         <h1 className="event-title">{title}</h1>
         <h2>
           Happening at
