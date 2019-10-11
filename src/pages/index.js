@@ -19,6 +19,8 @@ const IndexPage = () => {
   const [formattedRecurringEvents, setFormattedRecurringEvents] = useState([])
   const [initialUpdateTime, setInitialUpdateTime] = useState("")
   const [lastUpdateTime, setLastUpdateTime] = useState("")
+  const [singleEventItem, setSingleEventItem] = useState("")
+  const [toggleSingleEventsView, setToggleSingleEventsView] = useState(false)
 
   const [sectionData, setSectionData] = useState([])
   const [shoutData, setShoutData] = useState({})
@@ -376,27 +378,33 @@ const IndexPage = () => {
     }
   }, [activeTypes])
 
+  const handleFiltering = allSlideData => {
+    if (toggleSingleEventsView) {
+      return allSlideData.filter(slide => slide.name === singleEventItem)
+    } else {
+      return allSlideData.filter(
+        item =>
+          item.image !==
+            "https://res.cloudinary.com/gonation/gonation.data.prod/default/img-itm-cover-full.png" &&
+          !filteredOutSections.includes(item.sectionName) &&
+          activeTypes.includes(item.type)
+      )
+    }
+  }
+
   const handleRender = () => {
     switch (displayType) {
       case "default":
-        return slideData
-          .filter(
-            item =>
-              item.image !==
-                "https://res.cloudinary.com/gonation/gonation.data.prod/default/img-itm-cover-full.png" &&
-              !filteredOutSections.includes(item.sectionName) &&
-              activeTypes.includes(item.type)
+        return handleFiltering(slideData).map((item, idx) => {
+          return (
+            <Slide
+              key={`${item}-${idx}`}
+              slideStyleType={"random"}
+              // showcaseType={"default"}
+              data={item}
+            />
           )
-          .map((item, idx) => {
-            return (
-              <Slide
-                key={`${item}-${idx}`}
-                slideStyleType={"random"}
-                // showcaseType={"default"}
-                data={item}
-              />
-            )
-          })
+        })
         break
       case "list":
         return paginatedItems(8, sortFormattedMenu())
@@ -476,6 +484,10 @@ const IndexPage = () => {
         filteredOutSections={filteredOutSections}
         setFilteredOutSections={setFilteredOutSections}
         eventTypes={getEventTypes()}
+        setSingleEventItem={setSingleEventItem}
+        singleEventItem={singleEventItem}
+        toggleSingleEventsView={toggleSingleEventsView}
+        setToggleSingleEventsView={setToggleSingleEventsView}
       />
       {displayType === "both" && !isLoading ? (
         renderBoth()
@@ -490,7 +502,7 @@ const IndexPage = () => {
           interval={slideDuration}
           stopOnHover={false}
           infiniteLoop
-          autoPlay={true}
+          autoPlay={toggleSingleEventsView ? false : true}
           emulateTouch={true}
         >
           {!isLoading && handleRender()}

@@ -9,7 +9,7 @@ const PoweredToolsSlide = props => {
   const [showForm, setShowForm] = useState(false)
   const [filteredArr, setFilteredArr] = useState([])
   const [theArray, setTheArray] = useState(props.activeTypes)
-  const [toggleSingleEventsView, setToggleSingleEventsView] = useState(false)
+
   const handleDurationChange = event => {
     setCurrentDuration(event.target.value)
     props.setSlideDuration(event.target.value)
@@ -180,22 +180,24 @@ const PoweredToolsSlide = props => {
               </div>
               <div className="flex-down control column evt-toggle">
                 <label>
-                  Show just 1 event?
+                  Display a single event
                   <input
                     type="checkbox"
                     onChange={() =>
-                      setToggleSingleEventsView(!toggleSingleEventsView)
+                      props.setToggleSingleEventsView(
+                        !props.toggleSingleEventsView
+                      )
                     }
                   ></input>
                 </label>
-                {toggleSingleEventsView ? (
+                {props.toggleSingleEventsView ? (
                   <div className="">
                     <p>Select the event you'd like to only display</p>
                     {props.eventTypes.map((event, idx) => {
                       return (
                         <EventRadio
                           event={event}
-
+                          setSingleEventItem={props.setSingleEventItem}
                           // handleSectionSelection={handleSectionSelection}
                         />
                       )
