@@ -20,8 +20,6 @@ const RecurringSlide = ({
     eventDays ? "recurring" : "regular"
   )
 
-  console.log("starts is: ", starts, "ends is: ", ends)
-
   const checkIfEventIsOnCurrentDay = () => {
     const currentDay = dayjs()
       .format("dddd")

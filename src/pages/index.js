@@ -21,20 +21,18 @@ const IndexPage = () => {
   const [lastUpdateTime, setLastUpdateTime] = useState("")
   const [singleEventItem, setSingleEventItem] = useState("")
   const [toggleSingleEventsView, setToggleSingleEventsView] = useState(false)
+  const [shoutTime, setShoutTime] = useState("")
+  const [initialShoutTime, setInitialShoutTime] = useState("")
 
   const [sectionData, setSectionData] = useState([])
   const [shoutData, setShoutData] = useState({})
   const [formattedShoutData, setFormattedShoutData] = useState([])
 
-  const [randomNumber, setRandomNumber] = useState(1)
   const [slideData, setSlideData] = useState([])
 
   const [isLoading, setIsLoading] = useState(true)
 
   const [formattedEventData, setFormattedEventData] = useState([])
-  const [count, setCount] = useState(0)
-
-  // !This is temporary: will be used in the form / transfered to state
 
   // form state
   // const [isListView, setIsListView] = useState(false)
@@ -99,22 +97,42 @@ const IndexPage = () => {
     })
   }
 
+  const fetchLastShoutTime = id => {
+    axios({
+      url: `https://data.prod.gonation.com/profile/shoutsnew/${id}`,
+      adapter: jsonAdapter,
+    }).then(res => {
+      setInitialShoutTime(res.data.shout.updatedAt)
+      setShoutTime(res.data.shout.updatedAt)
+    })
+  }
+
   // https://data.prod.gonation.com/profile/newLastPricelistUpdate?profile_id=bzn-yIswX35BSp2jPrhbNzPjjg
 
   // Make requests when page loads
   useEffect(() => {
     fetchInitialUpdateTime(gonationID)
+    fetchLastShoutTime(gonationID)
 
     requestMenuData(gonationID)
     requestEventData(gonationID)
     requestRecurringEventData(gonationID)
     fetchShoutData(gonationID)
-    const interval = setInterval(() => {
+    const menuInterval = setInterval(() => {
       axios({
         url: `https://data.prod.gonation.com/profile/newLastPricelistUpdate?profile_id=${gonationID}`,
         adapter: jsonAdapter,
       }).then(res => {
         setLastUpdateTime(res.data.pricelistLastUpdated)
+      })
+    }, 10000)
+
+    const shoutInterval = setInterval(() => {
+      axios({
+        url: `https://data.prod.gonation.com/profile/shoutsnew/${gonationID}`,
+        adapter: jsonAdapter,
+      }).then(res => {
+        setShoutTime(res.data.shout.updatedAt)
       })
     }, 10000)
 
@@ -130,6 +148,16 @@ const IndexPage = () => {
       requestMenuData(gonationID)
     }
   }, [lastUpdateTime, initialUpdateTime])
+
+  useEffect(() => {
+    if (
+      shoutTime !== "" &&
+      initialShoutTime !== "" &&
+      shoutTime !== initialShoutTime
+    ) {
+      fetchShoutData(gonationID)
+    }
+  }, [shoutTime, initialShoutTime])
 
   // todo render ALL prices
   const getPrices = () => {}
