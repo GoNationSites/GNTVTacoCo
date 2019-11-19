@@ -1,6 +1,7 @@
 import React from "react"
 import ContentBlock from "./contentBlock"
 import optimizeImage from "../helpers/cloudinaryOptimization"
+import woodBg from "../images/wood.jpg"
 const FullImageBG = ({
   type,
   title,
@@ -15,8 +16,10 @@ const FullImageBG = ({
   eventDays,
   shoutedAt,
 }) => {
+  const defaultImg = 'https://res.cloudinary.com/gonation/w_2000,c_fill,c_scale,fl_lossy,f_auto,q_auto/gonation.data.prod/default/img-bzn-avatar-full.png'
+  const backgroundImage = image === defaultImg ? woodBg : image
   const fullImageBackground = {
-    background: `url(${optimizeImage(image, 2000)}) center center / cover`,
+    background: `url(${backgroundImage}) center center / cover`,
     height: "100vh",
     width: "100%",
   }
@@ -29,7 +32,7 @@ const FullImageBG = ({
     <div
       className={`full-background-slide ${
         isTypeCard ? "card-type" : ""
-      } ${getTextPositioning()} ${type === "event" ? "darken-overlay" : ""}`}
+        } ${getTextPositioning()} ${type === "event" ? "darken-overlay" : ""}`}
       style={fullImageBackground}
     >
       <ContentBlock

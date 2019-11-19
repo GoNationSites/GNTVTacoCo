@@ -21,17 +21,20 @@ const SideBySideView = ({
     backgroundPosition: "center",
     backgroundSize: "cover",
   }
+  const defaultImg = 'https://res.cloudinary.com/gonation/w_2000,c_fill,c_scale,fl_lossy,f_auto,q_auto/gonation.data.prod/default/img-bzn-avatar-full.png'
+  const backgroundImage = image === defaultImg ? wood : image
   return (
     <div
       className={`side-by-side-container columns is-marginless ${
         Math.floor(Math.random() * Math.floor(2)) === 0 ? "is-last" : "is-first"
-      }`}
+        }`}
       style={background}
     >
       <div className={`column is-one-fourth img-col  `}>
-        <div className="img-wrapper">
-          <img src={image}></img>
-        </div>
+        {type === 'shout' && image === defaultImg ? '' : <div className="img-wrapper">
+          <img src={backgroundImage}></img>
+        </div>}
+
       </div>
 
       <ContentBlock

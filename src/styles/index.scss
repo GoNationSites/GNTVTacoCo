@@ -168,16 +168,17 @@ p {
     display: flex;
     flex-direction: column;
     h1 {
-        font-size: 3rem;
+        font-size: 1.5rem;
     }
     .shout-time {
         order: 9;
         font-size: 1.1rem;
-        margin-top: 1rem;
     }
     p {
-        font-size: 1.5rem;
+        font-size: 1.75rem;
+        margin: 1.5rem 0;
     }
 }
 
 // End shout styes 
+
